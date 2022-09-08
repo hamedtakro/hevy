@@ -28,29 +28,20 @@ const exerciseSlice = createSlice({
 
 
             state.list = list.filter(item => item.id !== option)
-        },
-        addSet: (state, { payload }) => {
-        const {list , option} = payload
-            state.list = state.list.map((item) => {
-                return item.id === option 
-                        ? {
-                            ...item,
-                            set :  item.set +=1
-                        }
-                        : item
-            })
-        
-        
-        
-        
-        
-        
-         
-         
-         
         }
 
-
+        // addSet: (state, { payload }) => {
+        // const {list , option} = payload
+        // state.list = state.list.map((item) => {
+                // return item.id === option 
+                        // ? {
+                            // ...item,
+                            // set :  item.set +=1
+                        // }
+                        // : item
+        //    
+                    // })
+        // }
     }
 
 }

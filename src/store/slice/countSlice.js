@@ -9,11 +9,11 @@ const counterSlice = createSlice({
     },
     reducers: {
         addCount: (state , action) => {
-                  const {count } = action.payload
+                  const {count , option} = action.payload
                     console.log(count);
                     return{
                             ...state,
-                             value : [...state.value , { key: count, number : count }]
+                             value : [...state.value , {id :option, count }]
                     }    
         }
     }

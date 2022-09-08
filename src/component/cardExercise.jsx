@@ -15,7 +15,7 @@ import vFit1 from "../video/Fit1.mp4";
 const CardExercise = () => {
 
   const list = useSelector(state => state.exerciseShow.list)
-  console.log(list)
+
   return (
 
     <div div id="results1" className="search-results" >

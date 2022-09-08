@@ -9,7 +9,6 @@ import { setExercise } from '../store/slice/exerciseSlice'
 import CardsSelect from './cardSelect';
 import { addCount } from "../store/slice/countSlice";
 import SearchIcon from '@mui/icons-material/Search';
-import { width } from '@mui/system';
 import { useSelector } from 'react-redux';
 import Fit1 from "../img/fit1.jpg";
 import Fit2 from "../img/fit2.jpg";
@@ -74,8 +73,7 @@ const exercise = [
         body: 'Abdominals',
         equipment: 'Dumbbell',
         avatar: Fit1,
-        type: 'video',
-        
+        type: 'video',        
     }, {
         id: 3,
         title: 'Arnold Press (Dumbbell)',
@@ -148,7 +146,6 @@ const handlefilter = (e) => {
     setFilterEquipment(e.target.value)
     setFilterMuscles(0)
 }
-console.log(filterEquipment)
 const Filtered = filterEquipment == 0 ?
     exercise :
     exercise.filter((option) =>
@@ -158,7 +155,6 @@ const handleFilter = (e) => {
     setFilterMuscles(e.target.value)
     setFilterEquipment(0)
 }
-console.log(filterMuscles)
 const filtered = filterMuscles == 0 ?
     Filtered :
     Filtered.filter((option) =>
@@ -167,7 +163,6 @@ const [search, setSearch] = useState()
 const handleSearch = (e) => {
     setSearch(e.target.value)
 }
-console.log(search)
 const searched = !search ?
     filtered :
     exercise.filter((option) =>
