@@ -7,17 +7,12 @@ const exerciseShowSlice = createSlice({
     },
     reducers: {
         exerciseShow: (state, {payload}) => {
-            state.list.push(payload)
-            // return {
-            // ...state ,
-            // list : [...state.list , 
-            //    {key :payload.id , title: payload.title , body : payload.body , avatar :  payload.avatar , type:payload.type, video:payload.video}
-            // ]
-            // }    
-        }
-    }
+            state.list = [{ key :payload.id , title: payload.title , body : payload.body , avatar :  payload.avatar , type:payload.type, video:payload.video}]
+    },
   
-       })
+       }
+    }
+       )
 
 // 
 export const { exerciseShow } = exerciseShowSlice.actions

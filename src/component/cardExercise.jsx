@@ -24,7 +24,7 @@ const CardExercise = () => {
         <div className='my-4 flex'>
          
          <>
-         { option.type == 'img' ?  <img className='border-2 py-10 rounded-lg w-3/5' alt="Travis Howard" src={option.avatar} />
+         { option.type == 'img' ?  <img className='border-2 py-10 rounded-lg ' style={{ height: 240 , width :328}} alt="Travis Howard" src={option.avatar} />
           :<video className='border-2 rounded-lg w-3/5' autoPlay loop muted>
             <source src={option.video} type="video/mp4" />
           </video>   }

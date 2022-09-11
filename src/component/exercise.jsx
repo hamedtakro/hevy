@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './navbar';
 import '../App.css';
 import '../index.css';
-import {Paper,Box,Modal,Typography,ListItemAvatar,Stack,TextField ,Avatar,ListItemText,List,ListItem, MenuItem , InputLabel,FormControl ,Select,InputBase ,IconButton} from '@mui/material';
+import { Paper, Box, Modal, Typography, ListItemAvatar, Stack, TextField, Avatar, ListItemText, List, ListItem, MenuItem, InputLabel, FormControl, Select, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
@@ -14,7 +14,7 @@ import Fit3 from "../img/fit3.jpg";
 import Fit11 from "../img/fit1-1.jpg";
 import vFit1 from "../video/Fit1.mp4";
 import { useDropzone } from 'react-dropzone';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const equipment = [
@@ -125,12 +125,13 @@ function Exercise() {
 
 
 
+    const listShow = useSelector(state => state.exerciseShow.list)
 
     const dispatch = useDispatch()
     const handleList = (option) => {
         const listexercise = exercise.find((item) => item.id == option)
         dispatch(exerciseShow(listexercise))
-        console.log(listexercise)
+
 
     }
 
@@ -214,18 +215,6 @@ function Exercise() {
                                     ))}
                                 </TextField>
                             </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
                         </Box>
                         <libary>
@@ -408,14 +397,17 @@ function Exercise() {
                         </libary>
                     </div>
                     <div className="max-md:w-full mb-5 lg:w-4/6 md:mr-4 px-5">
-                        <div className='text-center'>
-                            <FitnessCenterIcon />
-                            <h2>Select an exercise</h2>
-                        </div>
 
 
-                        <CardExercise />
-
+                       
+                            {listShow.length > 0 ? <CardExercise /> :
+                             <Paper elevation={2} >
+                                <div className='fitnessIcon mt-20 p-20'>
+                                    <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
+                                    <h2>Select an exercise</h2>
+                                </div>
+                                </Paper>}
+                       
 
                     </div>
                 </div>

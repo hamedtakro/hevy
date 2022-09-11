@@ -7,7 +7,6 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { setExercise } from '../store/slice/exerciseSlice'
 import CardsSelect from './cardSelect';
-import { addCount } from "../store/slice/countSlice";
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
 import Fit1 from "../img/fit1.jpg";
@@ -65,7 +64,9 @@ const exercise = [
         body: 'Abdominals',
         equipment: 'Dumbbell',
         avatar: Fit1,
-        type: 'img'
+        type: 'img',
+        set:[],
+        timer:''
     },
     {
         id: 2,
@@ -73,21 +74,30 @@ const exercise = [
         body: 'Abdominals',
         equipment: 'Dumbbell',
         avatar: Fit1,
-        type: 'video',        
+        type: 'video',   
+        set: [] ,
+        timer:''
+    
     }, {
         id: 3,
         title: 'Arnold Press (Dumbbell)',
         body: 'Shoulders ',
         equipment: 'Barbell',
         avatar: Fit3,
-        type: 'img'
+        type: 'img',
+        set:[] ,
+        timer:''
+
     }, {
         id: 4,
         title: 'Arnold Press (Dumbbell)',
         body: 'Shoulders',
         equipment: 'Barbell',
         avatar: Fit2,
-        type: 'img'
+        type: 'img',
+        set:[] ,
+        timer:''
+
     },
 ]
 
@@ -162,6 +172,8 @@ const filtered = filterMuscles == 0 ?
 const [search, setSearch] = useState()
 const handleSearch = (e) => {
     setSearch(e.target.value)
+
+    console.log(list)
 }
 const searched = !search ?
     filtered :
@@ -170,29 +182,34 @@ const searched = !search ?
 
 
 
+
+const saveExercise =()=> {
+
+}
+
     return (
         <div className='rourin.style' >
             <Navbar />
-            <div className='container'>
-                <div className='exercise-box md:flex' >
+            <div className='lg:container'>
+                <div className='exercise-box md:flex lg:flex sm:w-full' >
                     {/* in ja saz kon */}
                     <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:mr-4 mt-6">
 
-                        <Grid container spacing={1} className="croutin md:flex">
-                            <Grid item xs={3}>
-                                <h2 className="font-bold text-xl">Create Routine</h2>
+                        <Grid container spacing={1} className=" md:flex">
+                            <Grid item xs={3}  md={3}>
+                                <h2 className="font-bold lg:text-xl xs:text-xs">Create Routine</h2>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={4} md={6}>
                             </Grid>
-                            <Grid item xs={3}>
-                                <Button className="float-end" variant="contained">Save Routine</Button>
+                            <Grid className="" item xs={3} md={3}>
+                                <Button onClick={saveExercise} className="float-end  md:h-10  " color="primary" variant="contained">Save Routine</Button>
                             </Grid>
                         </Grid>
 
                         <div className="mt-3">
                             <Paper elevation={3} >
 
-                                <input className="m-1" style={{ minWidth: "960px", height: 40 }} type="text" id="lname" name="lname" placeholder="Routine Title"></input>
+                                <input className="m-1" style={{ minWidth: "100%", height: 40 }} type="text" id="lname" name="lname" placeholder="Routine Title"></input>
                                 {/* card for task list */}
 
                                 {list.length>0? <CardsSelect /> : 
@@ -202,6 +219,7 @@ const searched = !search ?
                                 </div>
 
                                 }
+                                <Button className="float-end  md:h-10  " color="primary" variant="contained" >ADD exercise</Button>
                             </Paper>
                         </div>
                     </div>
@@ -267,10 +285,9 @@ const searched = !search ?
                                 </Paper>
                             </div>
                             <div>
-                                <List sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 500, position: 'relative', overflow: 'auto', }}>
-                                    <Divider variant="inset" component="li" />
-
-                                    {searched.map((option) => <button onClick={() => handleList(option.id)} key={option.id} className="flex">
+                                    {searched.map((option) => 
+                                     <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
+                                    <button onClick={() => handleList(option.id)} key={option.id} className="flex">
                                          <ListItem alignItems="flex-start">
                                         <ListItemAvatar>
                                             <Avatar alt="Remy Sharp" src={option.avatar} />
@@ -291,27 +308,10 @@ const searched = !search ?
                                             }
                                         />
                                     </ListItem>
-                                    </button>)}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                </List>
+                                    </button>
+                                    </List>)}
+                                    
+                                
                             </div>
                         </libary>
                     </div>

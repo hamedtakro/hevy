@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import { Grid, Card, CardHeader, FormControl, MenuItem, TextareaAutosize, Typography, CardContent, IconButton, InputLabel, Avatar } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Fit1 from "../img/fit1.jpg";
 import Fit2 from "../img/fit2.jpg";
 import Fit3 from "../img/fit3.jpg";
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
-// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import AddSet from './addSet'
 import { deleteExercise } from '../store/slice/exerciseSlice'
-import { addCount } from '../store/slice/countSlice';
+import { addSet , setInput  ,addTimer} from '../store/slice/exerciseSlice';
 import Menu from '@mui/material/Menu';
+import { Table, TableCell, TableContainer, TableHead, TableBody, TableRow, Paper } from '@mui/material';
 
 
 const ITEM_HEIGHT = 48;
@@ -31,6 +30,7 @@ const CardSelect = (props) => {
         setAnchorEl(null);
     };
 
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
     const list = useSelector(state => state.exercise.list)
 
@@ -61,32 +61,47 @@ const CardSelect = (props) => {
 
 
 
-    const [SET, setSET] = useState('');
+    const [timer, setTimer] = useState();
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setSET(event.target.value);
-    };
+    const handleChangeSelected = (e , id) => {
+        setTimer(e.target.value);
 
+        dispatch(addTimer({timer , id}))
+    }
 
-    const [timer, setTimer] = useState('');
-
-    const handleChangeSelected = (event: SelectChangeEvent) => {
-        setTimer(event.target.value);
-    };
-   
-//   delete 
+    //   delete 
     const deleteexercise = (option) => {
         dispatch(deleteExercise({ option, list }))
-        console.log("ok");
+        
     }
 
-//  counter
-    const [count , setCount] = useState(1)
+    //  counter
+    const [count, setCount] = useState(1)
     const handleSet = (option) => {
-        setCount(count +1)
-        console.log(option)
-        dispatch(addCount({count ,option}))
+        setCount(count + 1)
+        dispatch(addSet({  option }))
+
     }
+
+
+     const [kg, setKg] = useState()
+     const handleInputKg = (e,ind ,id) => {
+         setKg(e.target.value)
+        DispatchManeager({id ,ind ,kg})
+    }
+
+    const [REPS, setREPS] = useState()
+    const handleInputREPS = (e,ind ,id) => {
+         setREPS(e.target.value)
+        DispatchManeager({id ,ind ,REPS })
+    }
+
+    // set input 
+    const DispatchManeager = ({ind ,kg:ko ,REPS:reps, id})=>{
+        dispatch(setInput({kg ,REPS, ind , id}))
+        console.log( "kg"+ko , "reps"+reps , ind , id)
+    }   
+
 
     return (
         <div>
@@ -141,7 +156,7 @@ const CardSelect = (props) => {
                             <TextareaAutosize
                                 aria-label="empty textarea"
                                 placeholder=" Note..."
-                                style={{ width: 960, height: 40 }}
+                                style={{ width: '100%', height: 40 }}
                             />
                         </Typography>
                     </CardContent>
@@ -150,18 +165,15 @@ const CardSelect = (props) => {
                         </h1>
                         </Grid>
                         <Grid xs={3}>    <FormControl sx={{ m: 1, minWidth: 80 }}>
-                            <InputLabel id="demo-simple-select-autowidth-label">Timer</InputLabel>
+                            <InputLabel key={item.id} id="demo-simple-select-autowidth-label">Timer</InputLabel>
                             <Select
                                 labelId="demo-simple-select-autowidth-label"
                                 id="demo-simple-select-autowidth"
-                                value={timer}
-                                onChange={handleChangeSelected}
+                                
+                                onChange={(e)=>handleChangeSelected(e ,item.id)}
                                 autoWidth
                                 label="timer"
                             >
-                                <MenuItem value="">
-                                    <em>none</em>
-                                </MenuItem>
                                 <MenuItem value={0}>OFF</MenuItem>
                                 <MenuItem value={5}> 5 s</MenuItem>
                                 <MenuItem value={15}>15 s</MenuItem>
@@ -174,11 +186,31 @@ const CardSelect = (props) => {
                         <Grid xs={7}></Grid>
                         {/* card place   */}
 
-                        <div key={item.set} style={{ width: "100%" }}  > <AddSet key={item.set} /></div>
-
-
+                        <TableContainer sx={{ width: "100%" }} component={Paper}>
+                            <Table className='mr-0 ml-0' size="meduim" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow className='' >
+                                        <TableCell align="center">SET</TableCell>
+                                        {/* <TableCell align="center">PREVIOUS</TableCell> */}
+                                        <TableCell align="center">KG</TableCell>
+                                        <TableCell align="center">RESE</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                      {item.set.map((option ,ind)=>  
+                                <TableBody key={ind} >
+                                    <TableRow >
+                                        <TableCell align="center" > {ind+1}</TableCell>
+                                        <TableCell align="center"><input key={ind}  variant="filled" onChange={(e)=>handleInputKg(e,ind,item.id)}  className='inputCard' type='number'>
+                                        </input></TableCell>
+                                        <TableCell align="center"><input key={ind}  variant="filled" onChange={(e)=>handleInputREPS(e,ind,item.id)}  className='inputCard' type='number'>
+                                        </input></TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                ) }
+                            </Table>
+                        </TableContainer >  
                         <Grid sx={{ my: 3 }} xs={12} >
-                            <Button onClick={() => handleSet(item.id)} size={'large'} variant="outlined">+ Add Set</Button>
+                            <Button onClick={() => handleSet(item.id) } size={'large'} variant="outlined">+ Add Set</Button>
                         </Grid>
                     </Grid>
                 </Card>
