@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from '@mui/material/styles';
 import { useDispatch } from "react-redux";
 import Navbar from "./navbar";
-import {Button,Grid,Typography,Avatar,ListItemAvatar,ListItemText,Box,List,ListItem,Input,MenuItem,Divider,InputBase,Paper,TextField} from '@mui/material';
+import { Button, Grid, Typography, Avatar, ListItemAvatar, ListItemText, Box, List, ListItem, Input, MenuItem, Divider, InputBase, Paper, TextField } from '@mui/material';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { setExercise } from '../store/slice/exerciseSlice'
@@ -65,8 +65,8 @@ const exercise = [
         equipment: 'Dumbbell',
         avatar: Fit1,
         type: 'img',
-        set:[],
-        timer:''
+        set: [],
+        timer: ''
     },
     {
         id: 2,
@@ -74,10 +74,10 @@ const exercise = [
         body: 'Abdominals',
         equipment: 'Dumbbell',
         avatar: Fit1,
-        type: 'video',   
-        set: [] ,
-        timer:''
-    
+        type: 'video',
+        set: [],
+        timer: ''
+
     }, {
         id: 3,
         title: 'Arnold Press (Dumbbell)',
@@ -85,8 +85,8 @@ const exercise = [
         equipment: 'Barbell',
         avatar: Fit3,
         type: 'img',
-        set:[] ,
-        timer:''
+        set: [],
+        timer: ''
 
     }, {
         id: 4,
@@ -95,8 +95,8 @@ const exercise = [
         equipment: 'Barbell',
         avatar: Fit2,
         type: 'img',
-        set:[] ,
-        timer:''
+        set: [],
+        timer: ''
 
     },
 ]
@@ -143,49 +143,49 @@ function Newroutin() {
         const listexercise = exercise.find((item) => item.id == option)
         dispatch(setExercise(listexercise))
         // test
-    //    dispatch(addCount({option}))
+        //    dispatch(addCount({option}))
     }
-      const list = useSelector(state => state.exercise.list)
-    
-
-
-// serarch and filter
-
-const [filterEquipment, setFilterEquipment] = useState(0)
-const handlefilter = (e) => {
-    setFilterEquipment(e.target.value)
-    setFilterMuscles(0)
-}
-const Filtered = filterEquipment == 0 ?
-    exercise :
-    exercise.filter((option) =>
-        option.equipment.toLowerCase().includes(filterEquipment.toLowerCase()));
-const [filterMuscles, setFilterMuscles] = useState(0)
-const handleFilter = (e) => {
-    setFilterMuscles(e.target.value)
-    setFilterEquipment(0)
-}
-const filtered = filterMuscles == 0 ?
-    Filtered :
-    Filtered.filter((option) =>
-        option.body.toLowerCase().includes(filterMuscles.toLowerCase()));
-const [search, setSearch] = useState()
-const handleSearch = (e) => {
-    setSearch(e.target.value)
-
-    console.log(list)
-}
-const searched = !search ?
-    filtered :
-    exercise.filter((option) =>
-        option.title.toLowerCase().includes(search.toLowerCase()));
+    const list = useSelector(state => state.exercise.list)
 
 
 
+    // serarch and filter
 
-const saveExercise =()=> {
+    const [filterEquipment, setFilterEquipment] = useState(0)
+    const handlefilter = (e) => {
+        setFilterEquipment(e.target.value)
+        setFilterMuscles(0)
+    }
+    const Filtered = filterEquipment == 0 ?
+        exercise :
+        exercise.filter((option) =>
+            option.equipment.toLowerCase().includes(filterEquipment.toLowerCase()));
+    const [filterMuscles, setFilterMuscles] = useState(0)
+    const handleFilter = (e) => {
+        setFilterMuscles(e.target.value)
+        setFilterEquipment(0)
+    }
+    const filtered = filterMuscles == 0 ?
+        Filtered :
+        Filtered.filter((option) =>
+            option.body.toLowerCase().includes(filterMuscles.toLowerCase()));
+    const [search, setSearch] = useState()
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
 
-}
+        console.log(list)
+    }
+    const searched = !search ?
+        filtered :
+        exercise.filter((option) =>
+            option.title.toLowerCase().includes(search.toLowerCase()));
+
+
+
+
+
+
+
 
     return (
         <div className='rourin.style' >
@@ -195,28 +195,29 @@ const saveExercise =()=> {
                     {/* in ja saz kon */}
                     <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:mr-4 mt-6">
 
-                        <Grid container spacing={1} className=" md:flex">
-                            <Grid item xs={3}  md={3}>
-                                <h2 className="font-bold lg:text-xl xs:text-xs">Create Routine</h2>
-                            </Grid>
-                            <Grid item xs={4} md={6}>
-                            </Grid>
-                            <Grid className="" item xs={3} md={3}>
-                                <Button onClick={saveExercise} className="float-end  md:h-10  " color="primary" variant="contained">Save Routine</Button>
-                            </Grid>
-                        </Grid>
-
                         <div className="mt-3">
-                            <Paper elevation={3} >
 
-                                <input className="m-1" style={{ minWidth: "100%", height: 40 }} type="text" id="lname" name="lname" placeholder="Routine Title"></input>
+                            <Grid container spacing={1} className=" md:flex">
+                                <Grid item xs={3} md={3}>
+                                    <h2 className="font-bold lg:text-xl xs:text-xs">Create Routine</h2>
+                                </Grid>
+                                <Grid item xs={4} md={6}>
+                                </Grid>
+                                <Grid className="" item xs={3} md={3}>
+                                    <Button  className="float-end  md:h-10  " color="primary" variant="contained">Save Routine</Button>
+                                </Grid>
+                            </Grid>
+
+                            <Paper elevation={3} >
+                            <input className="m-1" style={{ minWidth: "100%", height: 40 }} type="text" id="lname" name="lname" placeholder="Routine Title"></input>
+
                                 {/* card for task list */}
 
-                                {list.length>0? <CardsSelect /> : 
-                                <div className='fitnessIcon'>
-                                    <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
-                                    <h2>Select an exercise</h2>
-                                </div>
+                                {list.length > 0 ? <CardsSelect /> :
+                                    <div className='fitnessIcon'>
+                                        <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
+                                        <h2>Select an exercise</h2>
+                                    </div>
 
                                 }
                                 <Button className="float-end  md:h-10  " color="primary" variant="contained" >ADD exercise</Button>
@@ -285,33 +286,33 @@ const saveExercise =()=> {
                                 </Paper>
                             </div>
                             <div>
-                                    {searched.map((option) => 
-                                     <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
-                                    <button onClick={() => handleList(option.id)} key={option.id} className="flex">
-                                         <ListItem alignItems="flex-start">
-                                        <ListItemAvatar>
-                                            <Avatar alt="Remy Sharp" src={option.avatar} />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={option.title}
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        sx={{ display: 'inline' }}
-                                                        component="span"
-                                                        variant="body2"
-                                                        color="text.primary"
-                                                    >
-                                                    </Typography>
-                                                    {option.body}
-                                                </React.Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                    </button>
+                                {searched.map((option) =>
+                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
+                                        <button onClick={() => handleList(option.id)} key={option.id} className="flex">
+                                            <ListItem alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar alt="Remy Sharp" src={option.avatar} />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary={option.title}
+                                                    secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                sx={{ display: 'inline' }}
+                                                                component="span"
+                                                                variant="body2"
+                                                                color="text.primary"
+                                                            >
+                                                            </Typography>
+                                                            {option.body}
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                            </ListItem>
+                                        </button>
                                     </List>)}
-                                    
-                                
+
+
                             </div>
                         </libary>
                     </div>
