@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './navbar';
 import '../App.css';
 import '../index.css';
-import { Paper, Box, Modal, Typography, ListItemAvatar, Stack, TextField, Avatar, ListItemText, List, ListItem, MenuItem, InputLabel, FormControl, Select, InputBase, IconButton } from '@mui/material';
+import { Paper, Box, Hidden, Button, Modal, Typography, ListItemAvatar, Stack, TextField, Avatar, ListItemText, List, ListItem, MenuItem, InputLabel, FormControl, Select, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
@@ -111,6 +111,22 @@ function Exercise() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [openList, setOpenList] = React.useState(false);
+    const handleOpenList = () => setOpenList(true);
+    const handleCloseList = () => setOpenList(false);
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      };
+
     const [currency, setCurrency] = React.useState('allequipment');
 
     const handleChange = (event) => {
@@ -370,49 +386,154 @@ function Exercise() {
                                 </Paper>
                             </div>
                             <div>
-                                {searched.map((option) => <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
-                                    <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
-                                        <ListItemAvatar>
-                                            <Avatar alt="Remy Sharp" src={option.avatar} />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={option.title}
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        sx={{ display: 'inline' }}
-                                                        component="span"
-                                                        variant="body2"
-                                                        color="text.primary"
-                                                    >
-                                                    </Typography>
-                                                    {option.body}
-                                                </React.Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <hr className='border-t-2'></hr>
-                                </List>)}
+                                {searched.map((option) =>
+                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
+                                        <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
+                                            <ListItemAvatar>
+                                                <Avatar alt="Remy Sharp" src={option.avatar} />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={option.title}
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            sx={{ display: 'inline' }}
+                                                            component="span"
+                                                            variant="body2"
+                                                            color="text.primary"
+                                                        >
+                                                        </Typography>
+                                                        {option.body}
+                                                    </React.Fragment>
+                                                }
+                                            />
+                                        </ListItem>
+                                        <hr className='border-t-2'></hr>
+                                    </List>)}
                             </div>
                         </libary>
                     </div>
-                    <div className="max-md:w-full mb-5 lg:w-4/6 md:mr-4 px-5">
+                    <div className="max-md:w-full mb-5 lg:w-4/6 md:mr-4 lg:px-5 px-0">
 
+                        <Paper elevation={2}  >
 
-                       
+                            <Hidden smUp>
+                                <Button onClick={handleOpen} className="float-end  md:h-10  " color="primary" variant="contained" >
+                                    create Exercise
+                                </Button>
+                            </Hidden>
                             {listShow.length > 0 ? <CardExercise /> :
-                             <Paper elevation={2} >
+
                                 <div className='fitnessIcon mt-20 p-20'>
                                     <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
                                     <h2>Select an exercise</h2>
                                 </div>
-                                </Paper>}
-                       
+
+                            }
+                            <Hidden smUp>
+                                <Button onClick={handleOpenList} className="float-end  md:h-10  " color="primary" variant="contained" >
+                                    Add Exercise
+                                </Button>
+                            </Hidden>
+                            <Modal
+                                open={openList}
+                                onClose={handleCloseList}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <Box component="form" container sx={{ '& .MuiTextField-root': { marginTop: '.5rem ', width: '100%' }, }} noValidate autoComplete="off">
+                                        <p>Filters</p>
+                                        <div>
+                                            <TextField
+                                                id="outlined-select"
+                                                select
+                                                value={filterEquipment}
+                                                onChange={handlefilter}
+                                            >
+                                                {equipment.map((option) => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </div>
+                                        <div>
+                                            <TextField
+
+                                                id="outlined-select-currency"
+                                                select
+                                                value={filterMuscles}
+                                                onChange={handleFilter}
+                                            >
+                                                {muscles.map((option) => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </div>
+                                    </Box>
+                                    <libary>
+                                        <div className='libaryTitle m-4'>
+                                            <p>Library</p>
+                                            <a>+ Create Exercise</a>
+                                        </div>
+                                        <div>
+                                            <Paper
+                                                component="form"
+                                                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', backgroundColor: 'rgb(240, 240, 240);' }}
+                                            >
+                                                <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
+                                                    <SearchIcon />
+                                                </IconButton>
+                                                <InputBase
+                                                    sx={{ ml: 1, flex: 1 }}
+                                                    placeholder="Search Exercise"
+                                                    inputProps={{ 'aria-label': 'search exercise' }}
+                                                    onChange={handleSearch}
+                                                    value={search}
+                                                />
+                                            </Paper>
+                                        </div>
+                                        <div>
+                                            {searched.map((option) =>
+                                                <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
+                                                    <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
+                                                        <ListItemAvatar>
+                                                            <Avatar alt="Remy Sharp" src={option.avatar} />
+                                                        </ListItemAvatar>
+                                                        <ListItemText
+                                                            primary={option.title}
+                                                            secondary={
+                                                                <React.Fragment>
+                                                                    <Typography
+                                                                        sx={{ display: 'inline' }}
+                                                                        component="span"
+                                                                        variant="body2"
+                                                                        color="text.primary"
+                                                                    >
+                                                                    </Typography>
+                                                                    {option.body}
+                                                                </React.Fragment>
+                                                            }
+                                                        />
+                                                    </ListItem>
+                                                    <hr className='border-t-2'></hr>
+                                                </List>)}
+                                        </div>
+                                    </libary>
+
+                                </Box>
+                            </Modal>
+                        </Paper>
+
+
 
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
