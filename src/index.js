@@ -12,6 +12,7 @@ import Newroutin from "./component/newroutine";
 import { store } from './store'
 import { Provider } from 'react-redux'
 import CardSelect from "./component/cardSelect";
+import RoutinesDay from "./component/routinesDay";
 // 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
          <Route path="login" element={<Login />} />
          <Route path="settings" element={<Settings />} />
          <Route path="newroutin" element={<Newroutin />} />
+         <Route path="routinesDay" element={<RoutinesDay />} />
        </Routes>
      </BrowserRouter>
     </Provider>

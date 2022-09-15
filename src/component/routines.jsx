@@ -9,7 +9,8 @@ import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ListIcon from '@mui/icons-material/List';
 import { width } from '@mui/system';
-
+import RoutinesDay from './routinesDay';
+import { Link } from 'react-router-dom'; 
 
 
 function Routines() {
@@ -27,7 +28,7 @@ function Routines() {
                     <div className='routin-right md:w-full lg:w-4/5' >
                         <div className='displayStyle'><h2 className='pt-4'>My Routines (2)</h2></div>
                         <div className='displayStyle listBox'>
-                            <a>DAY1</a>
+                            <Link to="/routinesDay" >DAY1</Link>
                             <MoreHorizIcon />
                         </div>
                         <div className='displayStyle listBox'>

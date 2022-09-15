@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
-import { Grid, Card, CardHeader, FormControl, MenuItem, TextareaAutosize, Typography, CardContent, IconButton, InputLabel, Avatar } from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import {
+    Grid, Card, CardHeader, FormControl,
+    MenuItem, TextareaAutosize, Typography, CardContent, IconButton, InputLabel, Avatar
+} from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 import Select from '@mui/material/Select';
@@ -31,9 +34,7 @@ const CardSelect = (props) => {
     };
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
     const list = useSelector(state => state.exercise.list)
-
     const exercise = [
         {
             id: 1,
@@ -58,6 +59,7 @@ const CardSelect = (props) => {
             avatar: ""
         },
     ]
+
     const [count, setCount] = useState(1)
     const handleSet = (option) => {
         setCount(count + 1)
@@ -73,24 +75,21 @@ const CardSelect = (props) => {
     const [timer, setTimer] = React.useState();
 
 
-    const handleChangeSelected =(e, id) => {
-
-
+    const handleChangeSelected = (e, id) => {
         setTimer(e.target.value);
-        dispatchManeager({id ,timer})
-        
+        dispatchManeager({ id, timer })
+
     }
 
     const handleInputKg = (e, ind, id) => {
         setKg(e.target.value)
-        dispatchManeager({ind , id})
-        console.log(ind , id);
+        dispatchManeager({ ind, id })
     }
 
-    
+
     const handleInputREPS = (e, ind, id) => {
         setREPS(e.target.value)
-        dispatchManeager({ind , id})
+        dispatchManeager({ ind, id })
     }
 
     const [ind, setInd] = useState()
@@ -99,14 +98,12 @@ const CardSelect = (props) => {
     // set input 
     const [REPS, setREPS] = useState()
     const [kg, setKg] = useState()
- 
-    
-    const dispatchManeager = ({ ind, id ,timer }) => {
-        console.log(ind , id)
-        dispatch(setInput({ kg, REPS, ind, id  }))
-        
-        dispatch(addTimer({id,timer}))
-      
+
+
+
+    const dispatchManeager = ({ ind, id, timer }) => {
+        dispatch(setInput({ kg, REPS, ind, id }))
+        dispatch(addTimer({ id, timer }))
     }
 
     return (
