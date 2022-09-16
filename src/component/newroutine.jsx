@@ -66,7 +66,9 @@ const exercise = [
         avatar: Fit1,
         type: 'img',
         set: [],
-        timer: ''
+        timer: '',
+        kg :'KG',
+        resp:'RESP'
     },
     {
         id: 2,
@@ -76,7 +78,8 @@ const exercise = [
         avatar: Fit1,
         type: 'video',
         set: [],
-        timer: ''
+        timer: '',
+        kg :'KG'
 
     }, {
         id: 3,
@@ -86,8 +89,8 @@ const exercise = [
         avatar: Fit3,
         type: 'img',
         set: [],
-        timer: ''
-
+        timer: '',
+        resp:'RESP'
     }, {
         id: 4,
         title: 'Arnold Press (Dumbbell)',

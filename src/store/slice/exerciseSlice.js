@@ -38,7 +38,7 @@ const exerciseSlice = createSlice({
                 return item.id === option
                     ? {
                         ...item,
-                        set: [...item.set, { kg: '', resp: '' }]
+                        set: [...item.set, {  }]
                     }
                     : item
 
@@ -46,13 +46,12 @@ const exerciseSlice = createSlice({
         },
         setInput: (state, { payload }) => {
             const { kg, id, ind ,REPS} = payload
-            console.log(kg, id, ind);
             state.list = state.list.map((item) => {
 
                 return item.id === id
                     ? {
                         ...item,
-                        set: item.set.map((option, index) => index == ind ? { kg: kg , resp :REPS} : option)
+                        set: item.set.map((option, index) => index == ind ? [kg , REPS]: option)
                     }
                     : item
             })

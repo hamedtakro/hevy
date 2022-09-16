@@ -61,6 +61,7 @@ const CardSelect = (props) => {
     ]
 
     const [count, setCount] = useState(1)
+
     const handleSet = (option) => {
         setCount(count + 1)
         dispatch(addSet({ option }))
@@ -69,7 +70,6 @@ const CardSelect = (props) => {
     //   delete 
     const deleteexercise = (option) => {
         dispatch(deleteExercise({ option, list }))
-
     }
 
     const [timer, setTimer] = React.useState();
@@ -78,28 +78,24 @@ const CardSelect = (props) => {
     const handleChangeSelected = (e, id) => {
         setTimer(e.target.value);
         dispatchManeager({ id, timer })
-
     }
 
     const handleInputKg = (e, ind, id) => {
-        setKg(e.target.value)
         dispatchManeager({ ind, id })
+        setKg(e.target.value)
     }
 
 
     const handleInputREPS = (e, ind, id) => {
-        setREPS(e.target.value)
         dispatchManeager({ ind, id })
+        setREPS(e.target.value)
     }
-
-    const [ind, setInd] = useState()
-    const [id, setId] = useState()
 
     // set input 
     const [REPS, setREPS] = useState()
     const [kg, setKg] = useState()
 
-
+   
 
     const dispatchManeager = ({ ind, id, timer }) => {
         dispatch(setInput({ kg, REPS, ind, id }))
@@ -110,6 +106,7 @@ const CardSelect = (props) => {
         <div>
 
             {list.map((item) =>
+
 
                 <Card key={item.id} sx={{ maxWidth: 'max', marginTop: 5 }}>
                     <CardHeader
@@ -191,25 +188,30 @@ const CardSelect = (props) => {
 
                         <TableContainer sx={{ width: "100%" }} component={Paper}>
                             <Table className='mr-0 ml-0' size="meduim" aria-label="a dense table">
-                                <TableHead>
+                               <TableHead>
                                     <TableRow className='' >
-                                        <TableCell align="center">SET</TableCell>
-                                        {/* <TableCell align="center">PREVIOUS</TableCell> */}
-                                        <TableCell align="center">KG</TableCell>
-                                        <TableCell align="center">RESE</TableCell>
-                                    </TableRow>
+                                       <TableCell align="center">SET</TableCell>
+                                       {item.kg ? <TableCell align="center">KG</TableCell> :''}
+                                       {item.resp ?  <TableCell align="center">{item?.resp}</TableCell>:'' }
+
+                                    </TableRow> 
                                 </TableHead>
                                 {item.set.map((option, ind) =>
                                     <TableBody key={ind} >
                                         <TableRow >
                                             <TableCell align="center" > {ind + 1}</TableCell>
-                                            <TableCell align="center"><input key={ind} variant="filled" onChange={(e) => handleInputKg(e, ind, item.id)} className='inputCard' type='number'>
-                                            </input></TableCell>
-                                            <TableCell align="center"><input key={ind} variant="filled" onChange={(e) => handleInputREPS(e, ind, item.id)} className='inputCard' type='number'>
-                                            </input></TableCell>
+                                            <TableCell align="center">
+                                                <input key={ind} variant="filled" onChange={(e) => handleInputKg(e, ind, item.id)} className='inputCard' type='number'>
+                                                </input>
+                                            </TableCell> 
+                                              <TableCell align="center">
+                                                <input key={ind} variant="filled" onChange={(e) => handleInputREPS(e, ind, item.id)} className='inputCard' type='number'>
+                                                </input>
+                                                </TableCell>  
                                         </TableRow>
                                     </TableBody>
                                 )}
+                                
                             </Table>
                         </TableContainer >
                         <Grid sx={{ my: 3 }} xs={12} >
