@@ -522,3 +522,25 @@ FormControl InputLabel{
   
 }
 
+.inputLogin{
+  margin-top: .5rem;
+  width: 65%;
+  background-color: #68696b8b;
+
+}
+.inputLogins{
+margin-top: 1.5rem;
+display: flex;
+flex-direction: column;
+flex-wrap: nowrap;
+margin-left: 2rem;
+/* align-items: center; */
+}
+.titleLogin {
+  text-align: center;
+  font-size: larger;
+  color: #1c2826;
+}
+ 
+
+
