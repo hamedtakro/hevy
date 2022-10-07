@@ -6,13 +6,13 @@ const exerciseShowSlice = createSlice({
         list: []
     },
     reducers: {
-        exerciseShow: (state, {payload}) => {
-            state.list = [{ key :payload.id , title: payload.title , body : payload.body , avatar :  payload.avatar , type:payload.type, video:payload.video}]
-    },
-  
-       }
+        exerciseShow: (state, { payload }) => {
+            state.list = [{ key: payload.id, title: payload.title, body: payload.body, avatar: payload.avatar, type: payload.type, video: payload.video }]
+        },
+
     }
-       )
+}
+)
 
 // 
 export const { exerciseShow } = exerciseShowSlice.actions

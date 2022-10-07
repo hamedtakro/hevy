@@ -525,7 +525,7 @@ FormControl InputLabel{
 .inputLogin{
   margin-top: .5rem;
   width: 65%;
-  background-color: #68696b8b;
+  background-color: #a7aebd8b;
 
 }
 .inputLogins{
@@ -533,13 +533,26 @@ margin-top: 1.5rem;
 display: flex;
 flex-direction: column;
 flex-wrap: nowrap;
-margin-left: 2rem;
-/* align-items: center; */
+align-items: center;
 }
 .titleLogin {
   text-align: center;
   font-size: larger;
   color: #1c2826;
+}
+.TimerShow {
+  border: 1px solid rgba(60, 60, 60, 0.801);
+  border-radius: 1rem;
+  justify-content: center;
+  text-align: center;
+  margin: 1px;
+   min-width: 80 ;
+}
+
+.labelLogin {
+  text-align: end;
+  font-size: large;
+
 }
  
 

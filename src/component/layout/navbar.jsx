@@ -7,10 +7,11 @@ import Logout from '@mui/icons-material/Logout';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import React from 'react';
-import logo from "../logo.png";
-import logors from "../logors.png";
+import logo from "../../logo.png";
+import logors from "../../logors.png";
 import Stack from '@mui/material/Stack';
-import '../App.css';
+import Check from '../authentication/checkNumber'
+import '../../App.css';
 import './navbar.css';
 import { Disclosure, Transition } from '@headlessui/react';
 import { BellIcon, XIcon } from '@heroicons/react/outline';
@@ -108,12 +109,14 @@ function Navbar() {
             Settings
           </MenuItem>
           </a>
+          <a href='/Login'>
           <MenuItem>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            Logout
+            Login
           </MenuItem>
+          </a>
         </Menu>
       </div>
       </nav>

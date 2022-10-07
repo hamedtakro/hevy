@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import Navbar from './navbar';
-import '../App.css';
-import '../index.css';
+import Navbar from '../layout/navbar';
+import '../../App.css';
+import '../../index.css';
 import { Paper, Box, Hidden, Button, Modal, Typography, ListItemAvatar, Stack, TextField, Avatar, ListItemText, List, ListItem, MenuItem, InputLabel, FormControl, Select, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import CardExercise from './cardExercise';
-import { exerciseShow } from '../store/slice/exerciseShow'
-import Fit1 from "../img/fit1.jpg";
-import Fit2 from "../img/fit2.jpg";
-import Fit3 from "../img/fit3.jpg";
-import Fit11 from "../img/fit1-1.jpg";
-import vFit1 from "../video/Fit1.mp4";
+import { exerciseShow } from '../../store/slice/exerciseShow'
+import Fit1 from "../../img/fit1.jpg";
+import Fit2 from "../../img/fit2.jpg";
+import Fit3 from "../../img/fit3.jpg";
+import Fit11 from "../../img/fit1-1.jpg";
+import vFit1 from "../../video/Fit1.mp4";
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -143,6 +143,7 @@ function Exercise() {
 
     const listShow = useSelector(state => state.exerciseShow.list)
 
+    console.log(listShow);
     const dispatch = useDispatch()
     const handleList = (option) => {
         const listexercise = exercise.find((item) => item.id == option)

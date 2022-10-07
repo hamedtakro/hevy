@@ -1,35 +1,25 @@
 import React, { useState } from "react";
-import Navbar from './navbar'
-import { Box, Paper, Label, Input, Button, Modal } from '@mui/material'
-import axios from 'axios'
-function Login() {
+import Navbar from '../layout/navbar'
+import { Box, Paper, Input, Button } from '@mui/material'
+
+const CheckNumber = ()=> {
 
     const [name, setName] = useState()
     const handleName = (e) => {
         setName(e.target.value)
     }
-
     const [number, setNumber] = useState()
     const handleNumber = (e) => {
         setNumber(e.target.value)
     }
-
     const [form, setForm] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault();
-        let person = { name: name, number: number }
-        // axios.post(`/person.json`, person)
-        // .then(response => this.Context.dispatch({ type: 'add-person', payload: { person: { ...person, key: response.data.name } } }))
-        setForm(true)
-        // .catch(err => console.log(err))
-
-    }
-
-    const [checked, setChecked] = useState()
-    const handleChecked = (e) => {
-        setChecked(e.target.value)
-    }
-
+        setForm(true) }
+    const [check , setCheck] = useState()
+    const handleCheckInput = (e)=>{       
+        setCheck(e.target.value)  }
+    const  handleCheck = ()=> { }
 
     return (
         <div>
@@ -51,7 +41,8 @@ function Login() {
                 <Paper elevation={9} className="paperLogin" >
                     <h1 className="m-10 titleLogin">WECOME TO HEVY</h1>
 
-                    {!form ? <form className="inputLogins" onSubmit={handleSubmit}>
+                    {form==false ? 
+                    <form className="inputLogins" onSubmit={handleSubmit}>
                         <label for='names'> name : </label>
                         <Input id='names' type="name" className=" inputLogin "
                             value={name} onChange={handleName} />
@@ -61,11 +52,10 @@ function Login() {
                         <Button className="inputLogin" color="primary" variant="contained" type="submit" > Log IN</Button>
                     </form>
                         :
-                        <form className="inputLogins" >
+                        <form className="inputLogins" onSubmit={handleCheck}>
                             <label for='checks'>  Please enter the password sent </label>
-                            <Input id='checks' type="number" className=" inputLogin my-4"
-                                value={checked} onChange={handleChecked} />
-                            <Button className="inputLogin " color="primary" variant="contained" type="submit" > checked</Button>
+                            <Input id='checks' type="number" className=" inputLogin my-4" onChange={handleCheckInput} value={check} />
+                            <Button className="inputLogin " color="primary" variant="contained" onClick={handleCheck} > checked</Button>
                         </form>
                     }
 
@@ -76,4 +66,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default CheckNumber;

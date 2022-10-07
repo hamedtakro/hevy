@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { styled } from '@mui/material/styles';
 import { useDispatch } from "react-redux";
-import Navbar from "./navbar";
-import { Button, Modal, Grid, Hidden, Typography, Avatar, ListItemAvatar, ListItemText, Box, List, ListItem, Input, MenuItem, Divider, InputBase, Paper, TextField } from '@mui/material';
+import Navbar from '../layout/navbar';
+import {
+    Button, Modal, Grid, Hidden, Typography, Avatar, ListItemAvatar, ListItemText, Box,
+    List, ListItem, Input, MenuItem, Divider, InputBase, Paper, TextField
+} from '@mui/material';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { setExercise } from '../store/slice/exerciseSlice'
+import { setExercise } from '../../store/slice/exerciseSlice'
 import CardsSelect from './cardSelect';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
-import Fit1 from "../img/fit1.jpg";
-import Fit2 from "../img/fit2.jpg";
-import Fit3 from "../img/fit3.jpg";
-import '../App.css';
+import Fit1 from "../../img/fit1.jpg";
+import Fit2 from "../../img/fit2.jpg";
+import Fit3 from "../../img/fit3.jpg";
+import '../../App.css';
 
 
 
@@ -67,8 +70,8 @@ const exercise = [
         type: 'img',
         set: [],
         timer: '',
-        kg :'KG',
-        resp:'RESP'
+        kg: 'KG',
+        resp: 'RESP'
     },
     {
         id: 2,
@@ -79,7 +82,7 @@ const exercise = [
         type: 'video',
         set: [],
         timer: '',
-        kg :'KG'
+        kg: 'KG'
 
     }, {
         id: 3,
@@ -90,7 +93,7 @@ const exercise = [
         type: 'img',
         set: [],
         timer: '',
-        resp:'RESP'
+        resp: 'RESP'
     }, {
         id: 4,
         title: 'Arnold Press (Dumbbell)',
@@ -204,7 +207,9 @@ function Newroutin() {
         exercise.filter((option) =>
             option.title.toLowerCase().includes(search.toLowerCase()));
 
-
+    const sendServer = () => {
+console.log('send' );
+    }
     return (
         <div className='rourin.style' >
             <Navbar />
@@ -213,16 +218,16 @@ function Newroutin() {
                     {/* in ja saz kon */}
                     <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:mr-4 mt-6">
 
-                        <div className="mt-3">
+                        <div className="mt-1">
 
-                            <Grid container spacing={1} className=" md:flex">
+                            <Grid container spacing={1} className="mb-4 md:flex">
                                 <Grid item xs={3} md={3}>
                                     <h2 className="font-bold lg:text-xl xs:text-xs">Create Routine</h2>
                                 </Grid>
                                 <Grid item xs={4} md={6}>
                                 </Grid>
                                 <Grid className="" item xs={3} md={3}>
-                                    <Button className="float-end  md:h-10  " color="primary" variant="contained">Save Routine</Button>
+                                    <Button onClick={sendServer} className="float-end  md:h-10 " color="primary" variant="contained">Save Routine</Button>
                                 </Grid>
                             </Grid>
 
@@ -238,7 +243,8 @@ function Newroutin() {
                                     </div>
 
                                 }
-                                <Hidden smUp>  <Button onClick={handleOpen} className="float-end  md:h-10  " color="primary" variant="contained" >ADD exercise
+                                <Hidden smUp>  <Button onClick={handleOpen} className="float-end  md:h-10  
+                                " color="primary" variant="contained" >ADD exercise
                                 </Button>
                                 </Hidden>
                                 <Modal
@@ -280,7 +286,7 @@ function Newroutin() {
                                                 </TextField>
                                             </div>
                                         </Box>
-                                        <libary>
+                                        <div>
                                             <div className='libaryTitle m-4'>
                                                 <p>Library</p>
                                                 <a>+ Create Exercise</a>
@@ -329,7 +335,7 @@ function Newroutin() {
                                                         </button>
                                                     </List>)}
                                             </div>
-                                        </libary>
+                                        </div>
 
                                     </Box>
                                 </Modal>
@@ -375,7 +381,7 @@ function Newroutin() {
 
                         </Box>
 
-                        <libary>
+                        <div>
                             <div className='libaryTitle'>
                                 <p>Library</p>
                                 <a>+ Create Exercise</a>
@@ -427,7 +433,7 @@ function Newroutin() {
 
 
                             </div>
-                        </libary>
+                        </div>
                     </div>
                 </div>
             </div >

@@ -2,11 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
-import Fit1 from "../img/fit1.jpg";
-import Fit2 from "../img/fit2.jpg";
-import Fit3 from "../img/fit3.jpg";
-import Fit11 from "../img/fit1-1.jpg";
-import vFit1 from "../video/Fit1.mp4";
 
 
 

@@ -1,6 +1,6 @@
-import './App.css';
-import Navbar from './component/navbar';
-import Home from './component/home';
+import '../src/App.css';
+import Navbar from './component/layout/navbar';
+import Home from './component/layout/home';
 import React from 'react';
 
 
