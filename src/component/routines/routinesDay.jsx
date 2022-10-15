@@ -77,10 +77,34 @@ const RoutinesDay = () => {
     ]
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+    const [route , setRoute] = useState()
     const dispatch = useDispatch()
 
     const list = useSelector(state => state.routinesday.list)
+
+    useEffect(() => {
+
+        getExercise()
+
+
+    }, [])
+    
+
+
+    async function getExercise() {
+        let result = await fetch("http://younikweb.ir/api/v1/routine", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        console.log(result);
+        setRoute(result)
+    }
 
     return (
         <div>

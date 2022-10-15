@@ -264,7 +264,6 @@ const RoutinesDay = () => {
         dispatch(deleteExercise({ option }))
         console.log(list);
     }
-    console.log(list);
     return (
         <div>
             <Navbar />

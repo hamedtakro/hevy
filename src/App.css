@@ -1,47 +1,36 @@
-/* @import '~mdb-ui-kit/css/mdb.min.css'; */
-/*  */
-/* .App { */
-  /* text-align: center; */
-/* } */
-/*  */
-/* .App-logo { */
-  /* height: 40vmin; */
-  /* pointer-events: none; */
-/* } */
-/*  */
-/* @media (prefers-reduced-motion: no-preference) { */
-  /* .App-logo { */
-    /* animation: App-logo-spin infinite 20s linear; */
-  /* } */
-/* } */
-/*  */
-/* .App-header { */
-  /* background-color: #282c34; */
-  /* min-height: 100vh; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* font-size: calc(10px + 2vmin); */
-  /* color: white; */
-/* } */
-/*  */
-/* .App-link { */
-  /* color: #61dafb; */
-/* } */
-/*  */
-/* @keyframes App-logo-spin { */
-  /* from { */
-    /* transform: rotate(0deg); */
-  /* } */
-  /* to { */
-    /* transform: rotate(360deg); */
-  /* } */
-/* } */
+
+@font-face {
+  font-family: Vazir;
+  font-style: normal;
+  font-weight: normal;
+  src: url('fonts/Vazir.eot');
+  src: url('fonts/Vazir.eot?#iefix') format('embedded-opentype'), 
+  url('fonts/Vazir.woff2') format('woff2'), 
+  url('fonts/Vazir.woff') format('woff'), 
+  url('fonts/Vazir.ttf') format('truetype');
+ }
+ @font-face {
+  font-family: Vazir-Bold;
+  font-style: normal;
+  font-weight: bold;
+  src: url('fonts/Vazir-Bold.eot');
+  src: url('fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'), 
+  url('fonts/Vazir-Bold.woff2') format('woff2'), 
+  url('fonts/Vazir-Bold.woff') format('woff'), 
+  url('fonts/Vazir-Bold.ttf') format('truetype');
+ }
+  
 body {
   background-color: rgb(252, 252, 252);
+  font-family: 'vazir-Bold';
 }
 
+.title-card {
+  font-family: 'vazir-Bold';
+  font-size: larger;
+  font-weight: 500;
+
+}
 .App {
   text-align: center;
   
@@ -524,8 +513,9 @@ FormControl InputLabel{
 
 .inputLogin{
   margin-top: .5rem;
-  width: 65%;
-  background-color: #a7aebd8b;
+  width: 80%;
+  height: 3rem;
+  background-color: #d8d9dd8b;
 
 }
 .inputLogins{
@@ -549,11 +539,46 @@ align-items: center;
    min-width: 80 ;
 }
 
-.labelLogin {
-  text-align: end;
-  font-size: large;
 
+
+.title-logout {
+  font-weight: 600;
+  font-size: 3rem;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+  text-align: center;
+  justify-content: center;
+  margin-top: 7rem;
 }
+
+.login {
+  background-image: url(./img/Loginbg3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover ;
+  min-height: 750px;
+  text-align: right;
+}
+.paperLogin{
+  direction: rtl;
+}
+
+.input-title h2 {
+  font-family: "vazir-Bold";
  
+}
 
-
+.equipment-list {
+  font-family: 'vazir-Bold';
+  text-align: right;
+  /* font-size: large; */
+}
+.name-user {
+  font-family: 'vazir-Bold';
+  text-align: right;
+  font-weight: 500;
+  font-size: larger;
+  color: #42d0f7;
+}
+.list-button {
+  width: 100%;
+  text-align: right;
+}

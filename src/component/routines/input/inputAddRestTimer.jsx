@@ -1,9 +1,9 @@
 import React , {useState , useEffect }from 'react'
 import { useDispatch } from 'react-redux';
-import {addTimer } from '../../store/slice/exerciseSlice'
+import {addTimer } from '../../../store/slice/setSlice'
 import {FormControl ,InputLabel ,Select ,MenuItem} from '@mui/material'
 
-const Timer = ({Id}) => {
+const InputAddRestTimer = ({Id}) => {
 
     const [timer, setTimer] = useState(0);
 
@@ -45,4 +45,4 @@ const Timer = ({Id}) => {
     )
 }
 
-export default Timer
+export default InputAddRestTimer

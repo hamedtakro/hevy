@@ -1,4 +1,4 @@
-import {Box,Avatar,Menu,MenuItem,ListItemIcon,Divider, IconButton,Typography,Tooltip} from '@mui/material';
+import { Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Typography, Tooltip } from '@mui/material';
 // import {PersonAdd,Settings,Logout,ContentPasteIcon,FitnessCenterIcon} from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonAdd from '@mui/icons-material/PersonAdd';
@@ -6,7 +6,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import React from 'react';
+import React ,{ useState} from 'react';
 import logo from "../../logo.png";
 import logors from "../../logors.png";
 import Stack from '@mui/material/Stack';
@@ -15,21 +15,31 @@ import '../../App.css';
 import './navbar.css';
 import { Disclosure, Transition } from '@headlessui/react';
 import { BellIcon, XIcon } from '@heroicons/react/outline';
+import { Link } from 'react-router-dom'
 
+function Navbar() {
+  const [log, setLog] = useState(false);
 
-function Navbar() { 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+  const handleLogin = () => setLog(true);
+  const handleLogout = () => {
+    localStorage.clear()
+  };
 
-    return (
-      <nav className="bg-white shadow ">
-      <div className ="navBar">
+  const token = localStorage.getItem("token")
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const user = localStorage.getItem("name")
+  return (
+    <nav className="bg-white shadow ">
+      <div className="navBar">
         <div className='navBox'>
           <div className="navLogo">
             <a href='/'><img className='hidden sm:flex' src={logo} width="110" height="26" /></a>
@@ -41,11 +51,11 @@ function Navbar() {
                 <HomeIcon fontSize="small" /><p className='hidden sm:flex'>Feed</p>
               </div>
             </a>
-            <a href='/routines'>
+            <Link to='/routines'>
               <div className='navMenuItem'>
                 <ContentPasteIcon fontSize="small" /><p className='hidden sm:flex'>Routines</p>
               </div>
-            </a>
+            </Link>
             <a href='/exercise'>
               <div className='navMenuItem'>
                 <FitnessCenterIcon fontSize="small" /><p className='hidden sm:flex'>Exercises</p>
@@ -53,7 +63,9 @@ function Navbar() {
             </a>
           </div>
         </div>
+        <h1 className='name-user'>{user}</h1>
         <div className="navProfile">
+          
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}
@@ -102,26 +114,37 @@ function Navbar() {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <a href='/settings'><MenuItem>
+          <Link to='/settings'><MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>
             Settings
           </MenuItem>
+          </Link>
+        {!token ?
+          <a href='/Login' onClick={handleLogin}>
+            <MenuItem>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Login
+            </MenuItem>
           </a>
-          <a href='/Login'>
-          <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Login
-          </MenuItem>
+:
+          <a href='/Logout' onClick={handleLogout}>
+            <MenuItem>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
           </a>
+}
         </Menu>
       </div>
-      </nav>
-    );
-  }
-  
-  
-  export default Navbar;
+    </nav>
+  );
+}
+
+
+export default Navbar;

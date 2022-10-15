@@ -143,12 +143,12 @@ function Exercise() {
 
     const listShow = useSelector(state => state.exerciseShow.list)
 
+    
     console.log(listShow);
     const dispatch = useDispatch()
     const handleList = (option) => {
         const listexercise = exercise.find((item) => item.id == option)
         dispatch(exerciseShow(listexercise))
-
 
     }
 

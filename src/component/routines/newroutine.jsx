@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
 import { useDispatch } from "react-redux";
 import Navbar from '../layout/navbar';
@@ -12,147 +12,153 @@ import { setExercise } from '../../store/slice/exerciseSlice'
 import CardsSelect from './cardSelect';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
-import Fit1 from "../../img/fit1.jpg";
-import Fit2 from "../../img/fit2.jpg";
-import Fit3 from "../../img/fit3.jpg";
+import { addSet } from "../../store/slice/setSlice";
+import { createRoutes } from "../../store/slice/setSlice";
 import '../../App.css';
 
+import exerciseApi from '../../api/exerciseApi'
 
-
-const equipment = [
-    {
-        value: 0,
-        label: 'All Equipment',
-    },
-    {
-        value: 'none',
-        label: 'None',
-    },
-    {
-        value: 'barbell',
-        label: 'Barbell',
-    },
-    {
-        value: 'dumbbell',
-        label: 'Dumbbell',
-    },
-    {
-        value: 'kettlebell',
-        label: 'Kettlebell',
-    },
-];
-const muscles = [
-    {
-        value: 0,
-        label: 'All Muscles',
-    },
-    {
-        value: 'abdominals',
-        label: 'Abdominals',
-    },
-    {
-        value: 'abductors',
-        label: 'Abductors',
-    },
-    {
-        value: 'shoulders',
-        label: 'Shoulders',
-    },
-];
-
-const exercise = [
-    {
-        id: 1,
-        title: 'Ab Scissors',
-        body: 'Abdominals',
-        equipment: 'Dumbbell',
-        avatar: Fit1,
-        type: 'img',
-        set: [],
-        timer: '',
-        kg: 'KG',
-        resp: 'RESP'
-    },
-    {
-        id: 2,
-        title: 'Ab Wheel',
-        body: 'Abdominals',
-        equipment: 'Dumbbell',
-        avatar: Fit1,
-        type: 'video',
-        set: [],
-        timer: '',
-        kg: 'KG'
-
-    }, {
-        id: 3,
-        title: 'Arnold Press (Dumbbell)',
-        body: 'Shoulders ',
-        equipment: 'Barbell',
-        avatar: Fit3,
-        type: 'img',
-        set: [],
-        timer: '',
-        resp: 'RESP'
-    }, {
-        id: 4,
-        title: 'Arnold Press (Dumbbell)',
-        body: 'Shoulders',
-        equipment: 'Barbell',
-        avatar: Fit2,
-        type: 'img',
-        set: [],
-        timer: ''
-
-    },
-]
-
-interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
 
 function Newroutin() {
-    const [currency, setCurrency] = React.useState('allequipment');
 
-
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-
-    const handleChange = (event) => {
-        setCurrency(event.target.value);
-    };
-    const [curren, setCurren] = React.useState('allmuscles');
-
-    const handleChanges = (event) => {
-        setCurren(event.target.value);
-    };
-
-
+    const list = useSelector(state => state.exercise.list)
+    const setList = useSelector(state => state.set.setList)
     const dispatch = useDispatch()
 
-    const handleList = (option) => {
-        const listexercise = exercise.find((item) => item.id == option)
-        dispatch(setExercise(listexercise))
-        // test
-        //    dispatch(addCount({option}))
-    }
-    const list = useSelector(state => state.exercise.list)
+    // response mobile hiden button
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
+    // get data 
+    useEffect(() => {
+
+        getExercise();
+        getEquipments();
+        getMuscles()
+    }, [])
+
+
+    const [exer, setExer] = useState()
+    const [equip, setEquip] = useState()
+    const [musc, setMusc] = useState()
+
+    async function getExercise() {
+        let result = await fetch("http://younikweb.ir/api/v1/exercises", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        console.log(result);
+        setExer(result.data)
+    }
+
+    async function getEquipments() {
+        let result = await fetch("http://younikweb.ir/api/v1/equipments", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setEquip(result.data)
+    }
+
+    async function getMuscles() {
+        let result = await fetch("http://younikweb.ir/api/v1/muscles", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setMusc(result.data)
+
+    }
+
+    // save 
+    
+
+        async function sendServer () {
+            let item = { setList };
+            let result = await fetch("http://younikweb.ir/api/v1/routine", {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type" : "appliction/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(item)
+            });
+            result = await result.json();
+            console.log(result);
+        } 
+
+    
+    // console.log(musc);
+    // console.log(exer);
+    // console.log(equip);
+
+
+    const handleList = (option) => {
+        const listexercise = exer.find((item) => item.id == option)
+        dispatch(createRoutes(option))
+
+        dispatch(setExercise(listexercise))
+    }
+
+    // serarch and filter
+
+    const [filterEquipment, setFilterEquipment] = useState(0)
+    const handlefilter = (e) => {
+        setFilterEquipment(e.target.value)
+        setFilterMuscles(0)
+    }
+
+    const Filtered = filterEquipment == 0 ?
+        exer :
+        exer.filter((option) =>
+            option.equipment_id == filterEquipment
+            // option.equipment.title.toLowerCase().includes(filterEquipment.toLowerCase())
+        );
+
+    const [filterMuscles, setFilterMuscles] = useState(0)
+    const handleFilter = (e) => {
+        setFilterMuscles(e.target.value)
+        setFilterEquipment(0)
+    }
+
+    const filtered = filterMuscles == 0 ?
+        Filtered :
+        exer.filter((option) =>
+            option.primary_muscle_id == filterMuscles
+        );
+
+    const [search, setSearch] = useState("")
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const searched = !search ?
+        filtered :
+        exer.filter((option) =>
+            option.title.toLowerCase().includes(search.toLowerCase()));
+
+
+
+
+    // css
     const style = {
         position: 'absolute',
         top: '50%',
@@ -163,53 +169,14 @@ function Newroutin() {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+
     };
 
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
 
-    const ShowListMenu = () => {
-
-    }
 
 
-    // serarch and filter
-
-    const [filterEquipment, setFilterEquipment] = useState(0)
-    const handlefilter = (e) => {
-        setFilterEquipment(e.target.value)
-        setFilterMuscles(0)
-    }
-    const Filtered = filterEquipment == 0 ?
-        exercise :
-        exercise.filter((option) =>
-            option.equipment.toLowerCase().includes(filterEquipment.toLowerCase()));
-    const [filterMuscles, setFilterMuscles] = useState(0)
-    const handleFilter = (e) => {
-        setFilterMuscles(e.target.value)
-        setFilterEquipment(0)
-    }
-    const filtered = filterMuscles == 0 ?
-        Filtered :
-        Filtered.filter((option) =>
-            option.body.toLowerCase().includes(filterMuscles.toLowerCase()));
-    const [search, setSearch] = useState()
-    const handleSearch = (e) => {
-        setSearch(e.target.value)
-
-        console.log(list)
-    }
-    const searched = !search ?
-        filtered :
-        exercise.filter((option) =>
-            option.title.toLowerCase().includes(search.toLowerCase()));
-
-    const sendServer = () => {
-console.log('send' );
-    }
     return (
         <div className='rourin.style' >
             <Navbar />
@@ -263,9 +230,9 @@ console.log('send' );
                                                     value={filterEquipment}
                                                     onChange={handlefilter}
                                                 >
-                                                    {equipment.map((option) => (
-                                                        <MenuItem key={option.value} value={option.value}>
-                                                            {option.label}
+                                                    {equip?.map((option) => (
+                                                        <MenuItem key={option.id} value={option.id}  >
+                                                            <h1 className="equipment-list">{option.title}</h1>
                                                         </MenuItem>
                                                     ))}
                                                 </TextField>
@@ -278,9 +245,9 @@ console.log('send' );
                                                     value={filterMuscles}
                                                     onChange={handleFilter}
                                                 >
-                                                    {muscles.map((option) => (
-                                                        <MenuItem key={option.value} value={option.value}>
-                                                            {option.label}
+                                                    {musc?.map((option) => (
+                                                        <MenuItem key={option.id} value={option.id}>
+                                                            {option.title}
                                                         </MenuItem>
                                                     ))}
                                                 </TextField>
@@ -288,8 +255,6 @@ console.log('send' );
                                         </Box>
                                         <div>
                                             <div className='libaryTitle m-4'>
-                                                <p>Library</p>
-                                                <a>+ Create Exercise</a>
                                             </div>
                                             <div>
                                                 <Paper
@@ -309,15 +274,17 @@ console.log('send' );
                                                 </Paper>
                                             </div>
                                             <div>
-                                                {searched.map((option) =>
-                                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', marginTop: '1rem', maxHeight: 300, position: '', overflow: 'auto', }}>
-                                                        <button onClick={() => handleList(option.id)} key={option.id} className="flex">
+                                                {Filtered?.map((option) =>
+                                                    <List key={option.typ_id} sx={{ direction: 'rtl', width: '100%', bgcolor: 'background.paper', marginTop: '1rem', maxHeight: 300, position: '', overflow: 'auto', }}>
+                                                        <button
+                                                            onClick={() => handleList(option.type_id)} key={option.type_id}
+                                                            className="flex">
                                                             <ListItem alignItems="flex-start">
                                                                 <ListItemAvatar>
-                                                                    <Avatar alt="Remy Sharp" src={option.avatar} />
+                                                                    <Avatar alt="Remy Sharp" src={"option.avatar"} />
                                                                 </ListItemAvatar>
                                                                 <ListItemText
-                                                                    primary={option.title}
+                                                                    primary={option.fa_title}
                                                                     secondary={
                                                                         <React.Fragment>
                                                                             <Typography
@@ -327,7 +294,7 @@ console.log('send' );
                                                                                 color="text.primary"
                                                                             >
                                                                             </Typography>
-                                                                            {option.body}
+                                                                            {option.primary_muscle.title}
                                                                         </React.Fragment>
                                                                     }
                                                                 />
@@ -354,11 +321,10 @@ console.log('send' );
                                     select
                                     value={filterEquipment}
                                     onChange={handlefilter}
-
                                 >
-                                    {equipment.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
+                                    {equip?.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}  >
+                                            <h1 className="equipment-list">{option.title}</h1>
                                         </MenuItem>
                                     ))}
                                 </TextField>
@@ -371,9 +337,9 @@ console.log('send' );
                                     value={filterMuscles}
                                     onChange={handleFilter}
                                 >
-                                    {muscles.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
+                                    {musc?.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.title}
                                         </MenuItem>
                                     ))}
                                 </TextField>
@@ -383,8 +349,6 @@ console.log('send' );
 
                         <div>
                             <div className='libaryTitle'>
-                                <p>Library</p>
-                                <a>+ Create Exercise</a>
                             </div>
                             <div>
                                 <Paper
@@ -405,15 +369,18 @@ console.log('send' );
                                 </Paper>
                             </div>
                             <div>
-                                {searched.map((option) =>
-                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
-                                        <button onClick={() => handleList(option.id)} key={option.id} className="flex">
-                                            <ListItem alignItems="flex-start">
+                                {Filtered?.map((option) =>
+                                    <List key={option.type_id} sx={{ direction: 'rtl', width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
+                                        <button
+                                            onClick={() => handleList(option.type_id)} key={option.type_id}
+                                            className="list-button">
+                                            <ListItem alignItems="flex-start" >
                                                 <ListItemAvatar>
-                                                    <Avatar alt="Remy Sharp" src={option.avatar} />
+                                                    <Avatar alt="Remy Sharp" src={"option.avatar"} />
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary={option.title}
+                                                    alignItems="flex-start"
+                                                    primary={option.fa_title}
                                                     secondary={
                                                         <React.Fragment>
                                                             <Typography
@@ -423,7 +390,7 @@ console.log('send' );
                                                                 color="text.primary"
                                                             >
                                                             </Typography>
-                                                            {option.body}
+                                                            {option.primary_muscle.title}
                                                         </React.Fragment>
                                                     }
                                                 />

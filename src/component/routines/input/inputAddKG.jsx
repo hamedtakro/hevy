@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setInputKG } from '../../store/slice/exerciseSlice'
+import { setInputKG } from '../../../store/slice/setSlice'
 
 const InputAddKG = ({ Index, id , prev }) => {
 
     const [kg, setKg] = useState(null)
     const dispatch = useDispatch()
-  
+    
     const handleInputKg = (e) => {
       console.log(e);
       setKg(e.target.value)

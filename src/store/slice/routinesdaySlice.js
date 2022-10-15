@@ -8,12 +8,7 @@ const routinesdaySlice = createSlice({
     reducers: {
         setExercise: (state, { payload }) => {
             const { exerciseDay } = payload
-            
-            console.log(exerciseDay)
-
             exerciseDay.map((item)=>  state.list.push(item))
-          
-
         },
 
 

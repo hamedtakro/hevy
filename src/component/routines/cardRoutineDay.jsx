@@ -15,9 +15,6 @@ import { deleteExercise } from '../../store/slice/exerciseSlice'
 import { addSet, addTimer } from '../../store/slice/exerciseSlice';
 import Menu from '@mui/material/Menu';
 import { Table, TableCell, TableContainer, TableHead, TableBody, TableRow, Paper } from '@mui/material';
-import InputAddKG from './inputAddKG';
-import InputAddREPS from './inputAddREPS';
-import Timer from './timer';
 import ButtunDeleteExercise from './buttunDeleteExercise'
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckBox from './checkBox';
@@ -91,7 +88,7 @@ const CardRoutineDay = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody  >
-                                    {item.set.map((option, ind) =>
+                                    {item.set?.map((option, ind) =>
                                         <TableRow key={ind} className={`${option.done == true ? 'btn-success' : ''}`}>
                                             <TableCell align="center" > {ind + 1}</TableCell>
                                             {item.kg ? <TableCell align="center">{option.kg} </TableCell> : ''}

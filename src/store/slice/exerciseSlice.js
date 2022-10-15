@@ -11,7 +11,25 @@ const exerciseSlice = createSlice({
     },
     reducers: {
         setExercise: (state, { payload }) => {
-            state.list.push(payload)
+            const {listexercise} = payload
+            // console.log(list);
+            if(state.list.length >=1){
+                console.log("if بخش");
+                 state.list.map((item)=>  
+                  (item.id == payload.id)?
+                 alert(" این ورزش را از قبل انتخاب کرده اید") 
+
+                 : state.list.push(payload), console.log(" in backsh ")
+                 
+                 )
+          
+          
+            }else{
+                console.log("بخش else");
+                state.list.push(payload)
+            }
+            // console.log(check);
+            // state.list.push(check)
 
             // return{
             // ...state ,
@@ -34,7 +52,9 @@ const exerciseSlice = createSlice({
             state.list = state.list.map((item, index) => {
 
                 return item.id === option
-                    ? {
+                    ?  
+                    {       
+                        // list.push({set:[]})
                         ...item,
                         set: [...item.set, {}]
                     }
@@ -42,8 +62,7 @@ const exerciseSlice = createSlice({
 
             })
         },
-
-
+        
         setInputKG: (state, { payload }) => {
             const { kg, id, Index } = payload
             state.list = state.list.map((item) => {
