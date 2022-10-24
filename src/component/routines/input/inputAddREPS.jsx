@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setInputREPS } from '../../../store/slice/setSlice'
+import { setInputREPS } from '../../../store/slice/exerciseSlice'
 
-const InputAddREPS = ({Index , id}) => {
+const InputAddREPS = ({Index , Id}) => {
 
     const [REPS, setREPS] = useState(null)
     const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const InputAddREPS = ({Index , id}) => {
     }
 
     useEffect(() => {
-        dispatch(setInputREPS({ REPS, id, Index }))
+        dispatch(setInputREPS({ REPS, Id, Index }))
     }, [REPS])
 
 

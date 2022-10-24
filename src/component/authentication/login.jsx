@@ -31,7 +31,9 @@ const Login = () => {
             body: JSON.stringify(item)
         });
         result = await result.json();
-        console.log(result.user.name);
+         (!result.token) ?
+         alert(result.message)
+        :
         localStorage.setItem("token" ,result.token)
         localStorage.setItem("name" , result.user.name)
          await setLogin(true)

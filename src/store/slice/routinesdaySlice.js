@@ -6,9 +6,13 @@ const routinesdaySlice = createSlice({
         list: [],
     },
     reducers: {
-        setExercise: (state, { payload }) => {
-            const { exerciseDay } = payload
-            exerciseDay.map((item)=>  state.list.push(item))
+
+        setRoute: (state, { payload }) => {
+            const {route} = payload
+            route.map((item)=> console.log(item))
+            route.map((item)=> state.list.push(item))
+            ;
+// state.list.push(item)          
         },
 
 
@@ -81,6 +85,6 @@ const routinesdaySlice = createSlice({
 
 })
 
-export const { setExercise, setDone, updateAddExercise,setInputKG ,setInputREPS,addSet ,deleteExercise } = routinesdaySlice.actions
+export const { setRoute, setDone, updateAddExercise,setInputKG ,setInputREPS,addSet ,deleteExercise } = routinesdaySlice.actions
 
 export default routinesdaySlice.reducer

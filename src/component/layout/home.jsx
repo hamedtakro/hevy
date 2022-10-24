@@ -7,7 +7,7 @@ function Home() {
         <div className="homeStyle">
             
             <h1>Home</h1>
-            <p>Welcome To Hevy</p>
+            <h2>Welcome To Hevy</h2>
         </div>
         
      );

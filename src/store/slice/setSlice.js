@@ -11,12 +11,19 @@ const setSlice = createSlice({
     },
     reducers: {
         createRoutes: (state, { payload }) => {
+            const {listexercise} = payload
+            console.log(listexercise);
             return {
                 ...state,
-                setList: [...state.setList, { exercise_id: payload , order: '', sets: [] }]
+                setList: [...state.setList, { exercise_id: listexercise.exercise_id ,key: listexercise.key, order: '', sets: [] }]
             }
 
+        },
 
+
+        removeExercise: (state, { payload }) => {
+            console.log(payload);
+            state.setList = state.setList.filter((item) => item.exercise_id !== payload)
         },
 
 
@@ -115,6 +122,6 @@ const setSlice = createSlice({
     }
 })
 
-export const { addSet, createRoutes, setInputKG, setInputREPS,setInputTime ,setInputDistance,addTimer ,setInputNote } = setSlice.actions
+export const { addSet, createRoutes, setInputKG, setInputREPS,setInputTime ,removeExercise,setInputDistance,addTimer ,setInputNote } = setSlice.actions
 
 export default setSlice.reducer

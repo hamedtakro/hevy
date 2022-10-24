@@ -22,7 +22,7 @@ import Fit1 from "../../../img/fit1.jpg";
 import Fit2 from "../../../img/fit2.jpg";
 import Fit3 from "../../../img/fit3.jpg";
 
-import { setExercise, updateAddExercise, addSet, deleteExercise } from '../../../store/slice/routinesdaySlice';
+import { setRoute, updateAddExercise, addSet, deleteExercise } from '../../../store/slice/routinesdaySlice';
 
 import Navbar from '../../layout/navbar'
 import CheckBox from '../checkBox';
@@ -245,7 +245,7 @@ const RoutinesDay = () => {
 
 
     useEffect(() => {
-   dispatch(setExercise({ exerciseDay }))
+   dispatch(setRoute({ exerciseDay }))
     }, []);
 
     const handleList = (option) => {
@@ -352,7 +352,7 @@ const RoutinesDay = () => {
 
                     <div className='exercise-left hidden max-md:w-full mb-5 lg:w-2/6 sm:inline'>
                         <Box component="form" sx={{ '& .MuiTextField-root': { margin: '4px 0', width: '100%' }, }} noValidate autoComplete="off">
-                            <p>Filters</p>
+                            <h2>Filters</h2>
                             <div>
                                 <TextField
                                     id="outlined-select"
@@ -384,7 +384,7 @@ const RoutinesDay = () => {
                         </Box>
                         <libary>
                             <div className='libaryTitle'>
-                                <p>Library</p>
+                                <h2>Library</h2>
                             </div>
                             <div>
                                 <Paper

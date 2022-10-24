@@ -15,9 +15,27 @@ import { useSelector } from 'react-redux';
 import { addSet } from "../../store/slice/setSlice";
 import { createRoutes } from "../../store/slice/setSlice";
 import '../../App.css';
-
 import exerciseApi from '../../api/exerciseApi'
+import { SettingsOutlined } from "@mui/icons-material";
 
+
+
+
+
+// css
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
+const ariaLabel = { 'aria-label': 'description' };
 
 function Newroutin() {
 
@@ -88,43 +106,62 @@ function Newroutin() {
     }
 
     // save 
-    
+    async function sendServer() {
+        let item = { setList };
+        let result = await fetch("http://younikweb.ir/api/v1/routine", {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(item)
+        });
+        result = await result.json();
+        console.log(result);
+    }
 
-        async function sendServer () {
-            let item = { setList };
-            let result = await fetch("http://younikweb.ir/api/v1/routine", {
-                method: 'POST',
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                    "Content-Type" : "appliction/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(item)
-            });
-            result = await result.json();
-            console.log(result);
-        } 
 
-    
     // console.log(musc);
     // console.log(exer);
     // console.log(equip);
 
-
+    // create list
     const handleList = (option) => {
         const listexercise = exer.find((item) => item.id == option)
-        dispatch(createRoutes(option))
-
         dispatch(setExercise(listexercise))
+    }
+
+
+    // create title
+    const [mainTitle, setMainTitle] = useState()
+
+    const handleTitle = (e) => {
+        setMainTitle(e.target.value)
     }
 
     // serarch and filter
 
     const [filterEquipment, setFilterEquipment] = useState(0)
+    const [filterMuscles, setFilterMuscles] = useState(0)
+    const [search, setSearch] = useState("")
+
+
     const handlefilter = (e) => {
         setFilterEquipment(e.target.value)
         setFilterMuscles(0)
     }
+
+    const handleFilter = (e) => {
+        setFilterMuscles(e.target.value)
+        setFilterEquipment(0)
+    }
+
+    const handleSearch = () => {
+        console.log(list);
+        // setSearch(e.target.value)
+    }
+
 
     const Filtered = filterEquipment == 0 ?
         exer :
@@ -133,22 +170,11 @@ function Newroutin() {
             // option.equipment.title.toLowerCase().includes(filterEquipment.toLowerCase())
         );
 
-    const [filterMuscles, setFilterMuscles] = useState(0)
-    const handleFilter = (e) => {
-        setFilterMuscles(e.target.value)
-        setFilterEquipment(0)
-    }
-
     const filtered = filterMuscles == 0 ?
         Filtered :
         exer.filter((option) =>
             option.primary_muscle_id == filterMuscles
         );
-
-    const [search, setSearch] = useState("")
-    const handleSearch = (e) => {
-        setSearch(e.target.value)
-    }
 
     const searched = !search ?
         filtered :
@@ -156,34 +182,13 @@ function Newroutin() {
             option.title.toLowerCase().includes(search.toLowerCase()));
 
 
-
-
-    // css
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-
-    };
-
-
-
-
-
-
     return (
-        <div className='rourin.style' >
+        <div className='newRoutin-style' >
             <Navbar />
             <div className='lg:container'>
-                <div className='exercise-box md:flex lg:flex sm:w-full' >
+                <div className='exercise-box md:flex lg:flex sm:w-full ' >
                     {/* in ja saz kon */}
-                    <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:mr-4 mt-6">
+                    <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:ml-14 mt-8 md:mr-1">
 
                         <div className="mt-1">
 
@@ -194,126 +199,147 @@ function Newroutin() {
                                 <Grid item xs={4} md={6}>
                                 </Grid>
                                 <Grid className="" item xs={3} md={3}>
-                                    <Button onClick={sendServer} className="float-end  md:h-10 " color="primary" variant="contained">Save Routine</Button>
+                                    <Button onClick={sendServer} className="float-end  md:h-10 " 
+                                    color="primary" variant="contained">Save Routine</Button>
                                 </Grid>
                             </Grid>
 
                             <Paper elevation={3} >
-                                <input className="m-1" style={{ minWidth: "100%", height: 40 }} type="text" id="lname" name="lname" placeholder="Routine Title"></input>
 
-                                {/* card for task list */}
-
-                                {list.length > 0 ? <CardsSelect /> :
-                                    <div className='fitnessIcon'>
-                                        <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
-                                        <h2>Select an exercise</h2>
-                                    </div>
-
-                                }
-                                <Hidden smUp>  <Button onClick={handleOpen} className="float-end  md:h-10  
-                                " color="primary" variant="contained" >ADD exercise
-                                </Button>
-                                </Hidden>
-                                <Modal
-                                    open={open}
-                                    onClose={handleClose}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
+                                <Box
+                                    component="form"
+                                    sx={{
+                                        '& > :not(style)': { m: 1 },
+                                        
+                                    }}
+                                    noValidate
+                                    autoComplete="off"
                                 >
-                                    <Box sx={style}>
-                                        <Box component="form" container sx={{ '& .MuiTextField-root': { marginTop: '.5rem ', width: '100%' }, }} noValidate autoComplete="off">
-                                            <p>Filters</p>
-                                            <div>
-                                                <TextField
-                                                    id="outlined-select"
-                                                    select
-                                                    value={filterEquipment}
-                                                    onChange={handlefilter}
-                                                >
-                                                    {equip?.map((option) => (
-                                                        <MenuItem key={option.id} value={option.id}  >
-                                                            <h1 className="equipment-list">{option.title}</h1>
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField>
-                                            </div>
-                                            <div>
-                                                <TextField
+                                    <Input className="input-main-title" 
+                                    placeholder="لطفا یک نام قرار وارد کنید" 
+                                    value={mainTitle} onChange={handleTitle} 
+                                    inputProps={ariaLabel}
+                                    />
+                                    </Box>
+                                    {/* card for task list */}
 
-                                                    id="outlined-select-currency"
-                                                    select
-                                                    value={filterMuscles}
-                                                    onChange={handleFilter}
-                                                >
-                                                    {musc?.map((option) => (
-                                                        <MenuItem key={option.id} value={option.id}>
-                                                            {option.title}
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField>
-                                            </div>
-                                        </Box>
-                                        <div>
-                                            <div className='libaryTitle m-4'>
-                                            </div>
-                                            <div>
-                                                <Paper
-                                                    component="form"
-                                                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', backgroundColor: 'rgb(240, 240, 240);' }}
-                                                >
-                                                    <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
-                                                        <SearchIcon />
-                                                    </IconButton>
-                                                    <InputBase
-                                                        sx={{ ml: 1, flex: 1 }}
-                                                        placeholder="Search Exercise"
-                                                        inputProps={{ 'aria-label': 'search exercise' }}
-                                                        onChange={handleSearch}
-                                                        value={search}
-                                                    />
-                                                </Paper>
-                                            </div>
-                                            <div>
-                                                {Filtered?.map((option) =>
-                                                    <List key={option.typ_id} sx={{ direction: 'rtl', width: '100%', bgcolor: 'background.paper', marginTop: '1rem', maxHeight: 300, position: '', overflow: 'auto', }}>
-                                                        <button
-                                                            onClick={() => handleList(option.type_id)} key={option.type_id}
-                                                            className="flex">
-                                                            <ListItem alignItems="flex-start">
-                                                                <ListItemAvatar>
-                                                                    <Avatar alt="Remy Sharp" src={"option.avatar"} />
-                                                                </ListItemAvatar>
-                                                                <ListItemText
-                                                                    primary={option.fa_title}
-                                                                    secondary={
-                                                                        <React.Fragment>
-                                                                            <Typography
-                                                                                sx={{ display: 'inline' }}
-                                                                                component="span"
-                                                                                variant="body2"
-                                                                                color="text.primary"
-                                                                            >
-                                                                            </Typography>
-                                                                            {option.primary_muscle.title}
-                                                                        </React.Fragment>
-                                                                    }
-                                                                />
-                                                            </ListItem>
-                                                        </button>
-                                                    </List>)}
-                                            </div>
+                                    {list.length > 0 ? <CardsSelect /> :
+                                        <div className='fitnessIcon'>
+                                            <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
+                                            <h2>Select an exercise</h2>
                                         </div>
 
-                                    </Box>
-                                </Modal>
-                                {/* +<Box component="button" sx={{ display: { xl: 'none', xs: 'block' } }} /> */}
+                                    }
+                                    <Hidden smUp>  <Button onClick={handleOpen} className="float-end  md:h-10  
+                                " color="primary" variant="contained" >ADD exercise
+                                    </Button>
+                                    </Hidden>
+                                    <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style}>
+                                            <Box component="form" container 
+                                            sx={{ '& .MuiTextField-root': { marginTop: '.5rem ', width: '100%' }, }} 
+                                            noValidate autoComplete="off">
+                                                <h2>Filters</h2>
+                                                <div>
+                                                    <TextField
+                                                        id="outlined-select"
+                                                        select
+                                                        value={filterEquipment}
+                                                        onChange={handlefilter}
+                                                    >
+                                                        {equip?.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}  >
+                                                                <h1 className="equipment-list">{option.title}</h1>
+                                                            </MenuItem>
+                                                        ))}
+                                                    </TextField>
+                                                </div>
+                                                <div>
+                                                    <TextField
+
+                                                        id="outlined-select-currency"
+                                                        select
+                                                        value={filterMuscles}
+                                                        onChange={handleFilter}
+                                                    >
+                                                        {musc?.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.title}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </TextField>
+                                                </div>
+                                            </Box>
+                                            <div>
+                                                <div className='libaryTitle m-4'>
+                                                </div>
+                                                <div>
+                                                    <Paper
+                                                        component="form"
+                                                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', 
+                                                        backgroundColor: 'rgb(240, 240, 240);' }}
+                                                    >
+                                                        <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
+                                                            <SearchIcon />
+                                                        </IconButton>
+                                                        <InputBase
+                                                            sx={{ ml: 1, flex: 1 }}
+                                                            placeholder="Search Exercise"
+                                                            inputProps={{ 'aria-label': 'search exercise' }}
+                                                            onChange={handleSearch}
+                                                            value={search}
+                                                        />
+                                                    </Paper>
+                                                </div>
+                                                <div>
+                                                    {Filtered?.map((option) =>
+                                                        <List key={option.typ_id} 
+                                                        sx={{ direction: 'rtl', width: '100%', bgcolor: 'background.paper', 
+                                                        marginTop: '1rem', maxHeight: 300, position: '', overflow: 'auto', }}>
+                                                            <button
+                                                                onClick={() => handleList(option.type_id)} key={option.type_id}
+                                                                className="flex">
+                                                                <ListItem alignItems="flex-start">
+                                                                    <ListItemAvatar>
+                                                                        <Avatar alt="Remy Sharp" src={"option.avatar"} />
+                                                                    </ListItemAvatar>
+                                                                    <ListItemText
+                                                                        primary={option.fa_title}
+                                                                        secondary={
+                                                                            <React.Fragment>
+                                                                                <Typography
+                                                                                    sx={{ display: 'inline' }}
+                                                                                    component="span"
+                                                                                    variant="body2"
+                                                                                    color="text.primary"
+                                                                                >
+                                                                                </Typography>
+                                                                                {option.primary_muscle.title}
+                                                                            </React.Fragment>
+                                                                        }
+                                                                    />
+                                                                </ListItem>
+                                                            </button>
+                                                        </List>)}
+                                                </div>
+                                            </div>
+
+                                        </Box>
+                                    </Modal>
+                                    {/* +<Box component="button" sx={{ display: { xl: 'none', xs: 'block' } }} /> */}
                             </Paper>
                         </div>
                     </div>
 
-                    <div className='exercise-left hidden max-md:w-full mb-5 lg:w-2/6 sm:inline'>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { margin: '4px 0', width: '100%' }, }} noValidate autoComplete="off">
-                            <p>Filters</p>
+                    <div className='exercise-left hidden max-md:w-full mb-5 md:ml-6 lg:w-3/6 sm:inline'>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { margin: '4px 0', width: '100%' }, }} 
+                        noValidate autoComplete="off">
+                            <h2>Filters</h2>
 
                             <div>
                                 <TextField
@@ -380,7 +406,12 @@ function Newroutin() {
                                                 </ListItemAvatar>
                                                 <ListItemText
                                                     alignItems="flex-start"
-                                                    primary={option.fa_title}
+                                                    primary={
+                                                        <Typography 
+                                                            className="newRoute-exersise-title">
+                                                            { option.fa_title}
+                                                        </Typography>
+                                                       }
                                                     secondary={
                                                         <React.Fragment>
                                                             <Typography

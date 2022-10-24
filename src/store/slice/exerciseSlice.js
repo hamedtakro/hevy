@@ -11,78 +11,99 @@ const exerciseSlice = createSlice({
     },
     reducers: {
         setExercise: (state, { payload }) => {
-            const {listexercise} = payload
-            // console.log(list);
-            if(state.list.length >=1){
-                console.log("if بخش");
-                 state.list.map((item)=>  
-                  (item.id == payload.id)?
-                 alert(" این ورزش را از قبل انتخاب کرده اید") 
 
-                 : state.list.push(payload), console.log(" in backsh ")
-                 
-                 )
-          
-          
-            }else{
-                console.log("بخش else");
-                state.list.push(payload)
+            return {
+                ...state,
+                list: [
+                    ...state.list,
+                    {
+                        id: payload.id,
+                        key: Math.floor(Math.random()*1000),
+                        en_title: payload.en_title,
+                        fa_title: payload.fa_title,
+                         keywords: payload.keywords,
+                        type :payload.type.indices,
+                        sets:[]
+                        // {index_id:'' , amount:'' } 
+                    }
+                ]
             }
-            // console.log(check);
-            // state.list.push(check)
-
-            // return{
-            // ...state ,
-            //  list:[
-            // ...state.list , 
-            // {key : payload.id , title :payload.title , avatar : payload.avatar ,body: payload.body}
-            //  ]
-            // }   
         },
+
 
         deleteExercise: (state, { payload }) => {
-            const { option , list } = payload
-            console.log(option);
-            state.list = state.list.filter((item) =>item.id !== option)
+            console.log(payload);
+            state.list = state.list.filter((item) => item.key !== payload)
         },
+
 
         addSet: (state, { payload }) => {
-            const { list, option } = payload
-            console.log(option);
+            console.log(payload);
+            
             state.list = state.list.map((item, index) => {
-
-                return item.id === option
-                    ?  
-                    {       
-                        // list.push({set:[]})
+             let kok =  item.type.map((option , index)=> [{index_id:option.id , amount: '' }]  )
+                return item.key == payload
+                    ?
+                    {
                         ...item,
-                        set: [...item.set, {}]
+                        sets: [...item.sets , [item.type.map((option , index)=> [{index_id:option.id , amount: '' }]  )]]
                     }
                     : item
 
             })
         },
-        
+
+
         setInputKG: (state, { payload }) => {
-            const { kg, id, Index } = payload
+            const { kg, Id, Index } = payload 
+            console.log(kg ,Id , Index);
             state.list = state.list.map((item) => {
 
-                return item.id === id
+                return item.key == Id
                     ? {
                         ...item,
-                        set: item.set.map((option, ind) => Index == ind ? { ...option, kg: kg } : option)
+                        sets: item.sets.map((option, ind) => Index == ind ? 
+
+                        option.map((item)=>
+                        item?.index_id == 1 ?
+                        [{ amount :kg} ] : item
+                        )
+                        : option)
                     }
                     : item
             })
         },
 
+        
         setInputREPS: (state, { payload }) => {
-            const { REPS, id, Index } = payload
+            const { REPS, Id, Index } = payload
             state.list = state.list.map((item) => {
-                return item.id === id
+                return item.key == Id
                     ? {
                         ...item,
-                        set: item.set.map((option, ind) => Index == ind ? {...option, REPS: REPS } : option)
+                        sets: item.sets.map((option, ind) => Index == ind ? 
+                        [{index_id : 3 , amount :REPS}] : option)
+                    }
+                    : item
+            })
+        },
+
+
+        setInputTime: (state, { payload }) => {
+            const { time, Id, Index } = payload
+            state.list = state.list.map((item) => {
+                return item.key == Id
+                    ? {
+                        ...item,
+                        sets: item.sets.map((option, ind) =>Index == ind ?
+                        
+                        option.map((item)=>  
+                        item?.index_id == 4?
+                        [ { amount :time} ] :item
+                        )
+                        : option)
+                        // sets: item.sets.map((option, ind) => Index == ind ? 
+                        // [...option,{index_id : 4 , amount :time}] : option)
                     }
                     : item
             })
@@ -94,23 +115,24 @@ const exerciseSlice = createSlice({
             state.list = state.list.map((item) => {
                 return item.id === Id
                     ? {
-                        ...item , 
-                        timer : timer
+                        ...item,
+                        timer: timer
                     }
-                    :item
+                    : item
             })
         },
 
-        done:(state , {payload}) => {
-            const {Index , Id , check } = payload 
+
+        done: (state, { payload }) => {
+            const { Index, Id, check } = payload
             state.list = state.list.map((item) => {
-          return item.id ==Id 
-            ?{
-                ...item ,
-                set : item.set.map((option , index) => index==Index ? {...option , done :check} : option)
-            }
-            :item
-        })
+                return item.id == Id
+                    ? {
+                        ...item,
+                        set: item.set.map((option, index) => index == Index ? { ...option, done: check } : option)
+                    }
+                    : item
+            })
         }
 
 
@@ -120,6 +142,6 @@ const exerciseSlice = createSlice({
 )
 
 
-export const { setExercise, deleteExercise, addSet, setInputREPS ,setInputKG, addTimer , done} = exerciseSlice.actions
+export const { setExercise, deleteExercise, addSet, setInputREPS, setInputKG,setInputTime, addTimer, done } = exerciseSlice.actions
 
 export default exerciseSlice.reducer

@@ -37,7 +37,7 @@ root.render(
             <Route path="routines" element={<Routines />} />
             <Route path="exercise" element={<Exercise />} />
             <Route path="newroutin" element={<Newroutin />} />
-            <Route path="routinesDay" element={<RoutinesDay />} />
+            <Route path="routinesDay/:id" element={<RoutinesDay />} />
             <Route path="editeRoutin" element={<EditeRoutines />} />
           </Route>
           

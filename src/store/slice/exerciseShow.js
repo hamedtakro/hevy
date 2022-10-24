@@ -7,7 +7,7 @@ const exerciseShowSlice = createSlice({
     },
     reducers: {
         exerciseShow: (state, { payload }) => {
-            state.list = [{ key: payload.id, title: payload.title, body: payload.body, avatar: payload.avatar, type: payload.type, video: payload.video }]
+            state.list.push(payload)
         },
 
     }

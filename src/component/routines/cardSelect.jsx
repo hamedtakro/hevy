@@ -12,7 +12,7 @@ import Fit3 from "../../img/fit3.jpg";
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteExercise } from '../../store/slice/exerciseSlice'
-import { addTimer } from '../../store/slice/exerciseSlice';
+import { addTimer, addSet } from '../../store/slice/exerciseSlice';
 import Menu from '@mui/material/Menu';
 import { Table, TableCell, TableContainer, TableHead, TableBody, TableRow, Paper } from '@mui/material';
 
@@ -23,11 +23,10 @@ import InputAddTime from './input/inputAddTime';
 import InputAddNote from './input/inputAddNote';
 import InputAddRestTimer from './input/inputAddRestTimer'
 
-import {setNote} from "../../store/slice/setSlice"
+import { setNote } from "../../store/slice/setSlice"
 import Timer from './input/inputAddRestTimer';
 import ButtunDeleteExercise from './buttunDeleteExercise'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { addSet } from "../../store/slice/setSlice";
 
 
 const options = [
@@ -44,37 +43,26 @@ const CardSelect = (props) => {
     const [kg, setKg] = useState()
     const [timer, setTimer] = useState();
     const [count, setCount] = useState(1)
-    const [note , setNote] = useState("")
+    const [note, setNote] = useState("")
     const list = useSelector(state => state.exercise.list)
-    const set = useSelector(state => state.set.setList)
 
-    console.log(set);
     const handleSet = (option) => {
+        console.log(option);
         dispatch(addSet(option))
     }
 
     //   delete 
 
-    const handledelete = (option) => {
-        dispatch(deleteExercise({ option }))
+    const handledelete = (key) => {
+        dispatch(deleteExercise(key))
     }
 
     // note 
-   
-   
-   
 
-
-   
-   
-   
-   
-   
-    
     return (
         <div>
             {list?.map((item, ind) =>
-                <Card key={item.id} sx={{ maxWidth: 'max', marginTop: 5 }}>
+                <Card key={item.key} sx={{ maxWidth: 'max', marginTop: 5 }}>
                     <CardHeader className='mt-4 mx-3'
                         avatar={
                             <Avatar className='' aria-label="recipe">
@@ -82,16 +70,16 @@ const CardSelect = (props) => {
                             </Avatar>
                         }
                         action={
-                            <button onClick={() => handledelete(item.id)}> <DeleteIcon /> </button>
+                            <button onClick={() => handledelete(item.key)}> <DeleteIcon /> </button>
                         }
                         title={<h1 className='title-card'>{item.fa_title}</h1>}
                     />
                     {/* <button > delete</button> */}
                     <CardContent>
-    
-                  <InputAddNote id={item.id}/>
-    
-                       
+
+                        <InputAddNote id={item.id} />
+
+
                     </CardContent>
                     <Grid container spacing={2} >
                         <Grid xs={2}>
@@ -111,45 +99,45 @@ const CardSelect = (props) => {
                             <TableHead>
                                 <TableRow className='' >
                                     <TableCell className="input-title" align="center"><h2>SET</h2> </TableCell>
-                                    {item.type.indices.map((type) => <TableCell className="input-title" align="center"><h2>{type.title}</h2></TableCell>)}
+                                    {item.type.map((type) => <TableCell className="input-title" align="center"><h2>{type.title}</h2></TableCell>)}
                                     {/* <TableCell className="input-title" align="center"></TableCell>  */}
                                 </TableRow>
                             </TableHead>
-                            {set?.map(items => item.id == items.exercise_id ? items.sets?.map((option, ind) =>
-
-                                <TableBody key={ind} >
+                            {item?.sets?.map((set, ind) =>
+                                <TableBody key={set.key} >
                                     <TableRow >
                                         <TableCell align="center" > {ind + 1}</TableCell>
-                                        {item.type.indices.map((type) =>
+                                        {item.type.map((type) =>
                                             (type.id == 1) ?
                                                 <TableCell align="center">
-                                                    <InputAddKG id={items.exercise_id} Index={ind} />
+                                                    <InputAddKG Id={item.key} Index={ind} />
                                                 </TableCell>
                                                 :
                                                 type.id == 2 ?
                                                     <TableCell align="center">
-                                                        <InputAddDistance id={items.exercise_id} Index={ind} />
-                                                    </TableCell> :
+                                                        <InputAddDistance Id={item.key} Index={ind} />
+                                                    </TableCell> 
+                                                    :
                                                     type.id == 3 ?
-                                                <TableCell align="center">
-                                                    <InputAddREPS id={items.exercise_id} Index={ind} />
-                                                </TableCell> :
-                                                    type.id == 4 ?
-                                                <TableCell align="center">
-                                                    <InputAddTime id={items.exercise_id} Index={ind} />
-                                                </TableCell> : ''
-                                            )
+                                                        <TableCell align="center">
+                                                            <InputAddREPS Id={item.key} Index={ind} />
+                                                        </TableCell>
+                                                         :
+                                                        type.id == 4 ?
+                                                            <TableCell align="center">
+                                                                <InputAddTime Id={item.key} Index={ind} />
+                                                            </TableCell> 
+                                                            : ''
+                                        )
                                         }
                                     </TableRow>
                                 </TableBody>
-                            ) : '')
-
-                            }
+                            )}
 
                         </Table>
                     </TableContainer >
                     <Grid sx={{ my: 3 }} xs={12} >
-                        <Button onClick={() => handleSet(item.id)} size={'large'} variant="outlined">+ Add Set</Button>
+                        <Button onClick={() => handleSet(item.key)} size={'large'} variant="outlined">+ Add Set</Button>
                     </Grid>
                 </Card>
             )

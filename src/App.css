@@ -1,25 +1,25 @@
-
 @font-face {
   font-family: Vazir;
   font-style: normal;
   font-weight: normal;
   src: url('fonts/Vazir.eot');
-  src: url('fonts/Vazir.eot?#iefix') format('embedded-opentype'), 
-  url('fonts/Vazir.woff2') format('woff2'), 
-  url('fonts/Vazir.woff') format('woff'), 
-  url('fonts/Vazir.ttf') format('truetype');
- }
- @font-face {
+  src: url('fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Vazir.woff2') format('woff2'),
+    url('fonts/Vazir.woff') format('woff'),
+    url('fonts/Vazir.ttf') format('truetype');
+}
+
+@font-face {
   font-family: Vazir-Bold;
   font-style: normal;
   font-weight: bold;
   src: url('fonts/Vazir-Bold.eot');
-  src: url('fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'), 
-  url('fonts/Vazir-Bold.woff2') format('woff2'), 
-  url('fonts/Vazir-Bold.woff') format('woff'), 
-  url('fonts/Vazir-Bold.ttf') format('truetype');
- }
-  
+  src: url('fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Vazir-Bold.woff2') format('woff2'),
+    url('fonts/Vazir-Bold.woff') format('woff'),
+    url('fonts/Vazir-Bold.ttf') format('truetype');
+}
+
 body {
   background-color: rgb(252, 252, 252);
   font-family: 'vazir-Bold';
@@ -31,19 +31,23 @@ body {
   font-weight: 500;
 
 }
+
 .App {
   text-align: center;
-  
+
 }
 
 a:link {
   text-decoration: none;
 }
 
-.flex-display{
+.flex-display {
   display: flex;
 }
-.pointer {cursor: pointer;}
+
+.pointer {
+  cursor: pointer;
+}
 
 .App-logo {
   height: 40vmin;
@@ -77,6 +81,7 @@ a:link {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -93,7 +98,7 @@ header-style {
   width: 100%;
 }
 
-.item-box{
+.item-box {
   padding-right: 50px;
   align-self: center;
 }
@@ -102,11 +107,7 @@ header-style {
   flex-direction: row-reverse;
 }
 
-.routin.style{
-  width: 100%;
-  min-height: 100%;
-}
-.exercise.style{
+.exercise.style {
   min-height: 100%;
 }
 
@@ -121,34 +122,42 @@ header-style {
   max-width: 1024px;
   margin: 0px auto;
   padding: 20px 30px;
+  direction: rtl;
 }
 
 
 .exercise-left {
   background-color: #fff;
-  border : 1px solid rgb(170, 171, 176); 
-  border-radius: 8px ;
+  border: 1px solid rgb(170, 171, 176);
+  border-radius: 8px;
   padding: 10px 10px;
-}
-.exercise-left p {
-  font-size: 16px;
-  margin-bottom: 16px;
-  color: rgb(155, 155, 155);
-  flex: auto;
-}
-.routin-right{
-  border-radius: 8px ;
-  padding: 0 20px;
-  background-color: #fff;
-  border : 1px solid rgb(170, 171, 176);  
-}
-.exercise-right{
-  align-items: center;
-  text-align: center;
-   
+  max-width: 19rem;
+  text-align: right;
 }
 
-.displayStyle{
+.exercise-left p {
+  text-align: right;
+  font-family: 'vazir';
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: rgb(24, 15, 15);
+  flex: auto;
+}
+
+.routin-right {
+  border-radius: 8px;
+  padding: 0 20px;
+  background-color: #fff;
+  border: 1px solid rgb(170, 171, 176);
+}
+
+.exercise-right {
+  align-items: center;
+  text-align: center;
+
+}
+
+.displayStyle {
   display: flex;
 }
 
@@ -156,13 +165,14 @@ header-style {
   padding: 7px;
 }
 
-.routin-accordiona{
+.routin-accordiona {
   width: 100%;
 
 }
-.routin-divroutin{
+
+.routin-divroutin {
   width: 100%;
- 
+
 }
 
 .create-routine-button {
@@ -172,7 +182,7 @@ header-style {
   flex-direction: row-reverse;
 }
 
-.flex-container > div {
+.flex-container>div {
   text-align: left;
   margin: 0 50px;
   align-self: flex-end;
@@ -193,8 +203,8 @@ header-style {
   flex: 1 1 0%;
   padding: 16px;
   margin: 20px 0;
-  border : 1px solid rgb(170, 171, 176); 
-  border-radius: 8px ;
+  border: 1px solid rgb(170, 171, 176);
+  border-radius: 8px;
 }
 
 .listBox a {
@@ -215,7 +225,7 @@ header-style {
   color: #3861b3;
 }
 
-.croutin{
+.croutin {
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -278,31 +288,32 @@ header-style {
 }
 
 .modalBox {
-  position: absolute ;
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) ;
-  width: 500px ;
-  box-shadow: 24 ;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  box-shadow: 24;
   padding: 20px;
   background-color: rgb(252, 252, 252);
   border-radius: 10px;
 
 }
+
 .modalBox:focus {
   outline: none;
 }
 
-.container{
+.container {
   align-items: center;
   padding: 16px 0px;
   display: flex;
   flex-direction: column;
-  
+
 }
 
 
-.container p{
+.container p {
   text-align: center;
   color: rgb(29, 131, 234);
 }
@@ -323,11 +334,12 @@ header-style {
   border: 0px;
   border-bottom: 3px solid rgb(224, 224, 224);
 }
+
 .listcreateExercise input[type=text]:focus {
   outline: none;
 }
 
-.formatSelect{
+.formatSelect {
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -347,19 +359,19 @@ header-style {
   display: flex;
   flex-direction: column;
   width: 200px;
-  
+
 }
 
 .formControl {
   min-height: 25px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
-FormControl InputLabel{
+FormControl InputLabel {
   height: 30px;
 }
 
-.saveExercise{
+.saveExercise {
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -408,50 +420,61 @@ FormControl InputLabel{
   cursor: pointer;
   font-size: 18px;
 }
-.active, .btn:hover {
+
+.active,
+.btn:hover {
   background-color: #666;
   color: white;
 }
-.cardlist{
-  display: flex; 
+
+.cardlist {
+  display: flex;
 }
 
-.cardHedearLine{
- margin-left: 20rem;
+.cardHedearLine {
+  margin-left: 20rem;
   border-bottom: 2px solid;
 }
-.inputCard{
+
+.inputCard {
   max-width: 2.5rem;
   text-align: center;
 }
-.cardBodyLine{
+
+.cardBodyLine {
   background-color: rgba(192, 190, 190, 0.514);
   border-bottom: .1rem dashed rgba(54, 54, 54, 0.442);
 }
-.restTimer{
+
+.restTimer {
   color: rgb(56, 56, 243);
 }
-.imglist{
+
+.imglist {
   min-width: 50px;
-  
+
 }
-.fitnessIcon{
+
+.fitnessIcon {
   min-width: max-content;
   min-height: 300px;
   justify-content: center;
   text-align: center;
 }
+
 .btnop {
   text-align: center;
   justify-content: center;
   min-width: fit-content;
 }
-.btn-success{
+
+.btn-success {
   background-color: rgba(3, 255, 3, 0.555);
 }
-.listItemSetting{
-  border-bottom : .1rem solid rgba(109, 108, 108, 0.88);
-  text-align: center; 
+
+.listItemSetting {
+  border-bottom: .1rem solid rgba(109, 108, 108, 0.88);
+  text-align: center;
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -467,76 +490,85 @@ FormControl InputLabel{
 .listItemSetting h1 {
   margin: 0 .7rem;
 }
-.listSetting{
 
-  border : 1px solid rgba(122, 122, 121, 0.478);
-  border-radius: .4rem;  
+.listSetting {
+
+  border: 1px solid rgba(122, 122, 121, 0.478);
+  border-radius: .4rem;
 
 }
+
 .setting-box {
-  max-width:1100px;
+  max-width: 1100px;
   margin: 0px auto;
   padding: 20px 10px;
 }
-.titleSetting{
-  color :#666
+
+.titleSetting {
+  color: #666
 }
 
-.setting-Right{
+.setting-Right {
   background-color: #fff;
-  border : 1px solid rgb(170, 171, 176); 
-  border-radius: 8px ;
+  border: 1px solid rgb(170, 171, 176);
+  border-radius: 8px;
   padding: 20px 30px;
   margin-top: .5rem;
 }
-.inputSetting{
+
+.inputSetting {
   display: block;
   width: 100%;
 
 }
-.uploadpicture{
+
+.uploadpicture {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   flex-wrap: nowrap;
   text-align: center;
   align-content: center;
   justify-content: center;
   align-items: center;
 }
-.passwordSetting{
+
+.passwordSetting {
   display: flex;
-  flex-direction:column ;
+  flex-direction: column;
   flex-wrap: nowrap;
 
-  
+
 }
 
-.inputLogin{
+.inputLogin {
   margin-top: .5rem;
   width: 80%;
   height: 3rem;
   background-color: #d8d9dd8b;
 
 }
-.inputLogins{
-margin-top: 1.5rem;
-display: flex;
-flex-direction: column;
-flex-wrap: nowrap;
-align-items: center;
+
+.inputLogins {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
 }
+
 .titleLogin {
   text-align: center;
   font-size: larger;
   color: #1c2826;
 }
+
 .TimerShow {
   border: 1px solid rgba(60, 60, 60, 0.801);
   border-radius: 1rem;
   justify-content: center;
   text-align: center;
   margin: 1px;
-   min-width: 80 ;
+  min-width: 80;
 }
 
 
@@ -544,7 +576,7 @@ align-items: center;
 .title-logout {
   font-weight: 600;
   font-size: 3rem;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: center;
   justify-content: center;
   margin-top: 7rem;
@@ -553,17 +585,18 @@ align-items: center;
 .login {
   background-image: url(./img/Loginbg3.jpg);
   background-repeat: no-repeat;
-  background-size: cover ;
+  background-size: cover;
   min-height: 750px;
   text-align: right;
 }
-.paperLogin{
+
+.paperLogin {
   direction: rtl;
 }
 
 .input-title h2 {
   font-family: "vazir-Bold";
- 
+
 }
 
 .equipment-list {
@@ -571,6 +604,7 @@ align-items: center;
   text-align: right;
   /* font-size: large; */
 }
+
 .name-user {
   font-family: 'vazir-Bold';
   text-align: right;
@@ -578,7 +612,61 @@ align-items: center;
   font-size: larger;
   color: #42d0f7;
 }
+
 .list-button {
   width: 100%;
   text-align: right;
+}
+
+.input-main-title {
+  width: max-content;
+
+}
+
+.note {
+  direction: rtl;
+  font-family: 'vazir';
+  text-align: right;
+  color: rgba(60, 60, 60, 0.801)
+}
+
+.routine-day {
+  justify-content: center;
+  text-align: center;
+
+}
+
+.routine-day-main {
+  background: rgb(241, 130, 179);
+  background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%);
+}
+
+.length-route {
+  margin-top: .3rem;
+  font-family: 'vazir';
+}
+
+.button-update {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.routin-style {
+  width: 100%;
+  min-height: 53rem;
+  background: rgb(241, 130, 179);
+  background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%);
+  ;
+  background-size: cover;
+}
+
+.newRoutin-style { 
+  
+  width: 100%;
+  min-height: 53rem;
+  background: rgb(241, 130, 179);
+  background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%);
+  background-size: cover;
 }

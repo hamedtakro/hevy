@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setInputTime } from '../../../store/slice/setSlice'
+import { setInputTime } from '../../../store/slice/exerciseSlice'
 
-const InputAddTime = ({ Index, id , prev }) => {
+const InputAddTime = ({ Index, Id  }) => {
 
     const [time, setTime] = useState(null)
     const dispatch = useDispatch()
@@ -14,7 +14,7 @@ const InputAddTime = ({ Index, id , prev }) => {
   
   
     useEffect(() => {
-      dispatch(setInputTime({ time, id, Index }))
+      dispatch(setInputTime({ time, Id, Index }))
     }, [time])
   
 
@@ -22,7 +22,7 @@ const InputAddTime = ({ Index, id , prev }) => {
     return (
   
       <input key={Index} variant="filled" value={time} onChange={handleInputTime} className='inputCard' type='number'>
-      {}
+      
       </input>
   
   
