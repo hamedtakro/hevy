@@ -11,7 +11,6 @@ import Fit2 from "../../img/fit2.jpg";
 import Fit3 from "../../img/fit3.jpg";
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteExercise } from '../../store/slice/exerciseSlice'
 import { addTimer, addSet } from '../../store/slice/exerciseSlice';
 import Menu from '@mui/material/Menu';
 import { Table, TableCell, TableContainer, TableHead, TableBody, TableRow, Paper } from '@mui/material';
@@ -23,10 +22,9 @@ import InputAddTime from './input/inputAddTime';
 import InputAddNote from './input/inputAddNote';
 import InputAddRestTimer from './input/inputAddRestTimer'
 
-import { setNote } from "../../store/slice/setSlice"
-import Timer from './input/inputAddRestTimer';
 import ButtunDeleteExercise from './buttunDeleteExercise'
 import DeleteIcon from '@mui/icons-material/Delete';
+import ExampleCard from './exampleCard';
 
 
 const options = [
@@ -47,52 +45,36 @@ const CardSelect = (props) => {
     const list = useSelector(state => state.exercise.list)
 
     const handleSet = (option) => {
-        console.log(option);
         dispatch(addSet(option))
     }
 
-    //   delete 
 
-    const handledelete = (key) => {
-        dispatch(deleteExercise(key))
-    }
-
-    // note 
 
     return (
         <div>
             {list?.map((item, ind) =>
-                <Card key={item.key} sx={{ maxWidth: 'max', marginTop: 5 }}>
+                <Card key={item.key} sx={{ maxWidth: 700, marginTop: 5 }}>
                     <CardHeader className='mt-4 mx-3'
                         avatar={
                             <Avatar className='' aria-label="recipe">
                                 <img className='imglist' src={"item?.avatar"} />
                             </Avatar>
                         }
-                        action={
-                            <button onClick={() => handledelete(item.key)}> <DeleteIcon /> </button>
-                        }
+                        action={<ExampleCard seperator={1} Id={item.key} />}
                         title={<h1 className='title-card'>{item.fa_title}</h1>}
                     />
                     {/* <button > delete</button> */}
                     <CardContent>
 
-                        <InputAddNote id={item.id} />
-
+                        <InputAddNote separator={1} Id={item.key} />
 
                     </CardContent>
-                    <Grid container spacing={2} >
-                        <Grid xs={2}>
-                            <h1 className="m-3 restTimer">
-                                <AvTimerIcon /> Rest Timer :
-                            </h1>
-                        </Grid>
-                        <Grid xs={3}>
-                            <InputAddRestTimer Id={item.id} />
-                        </Grid>
-                    </Grid>
-                    <Grid xs={7}></Grid>
-                    {/* card place   */}
+                    <div className='restTimer' xs={12}>
+                        <InputAddRestTimer separator={1} Id={item.key}  />
+                        <h1 className="m-3 restTimerTitle ">
+                            <AvTimerIcon />  <h2>: Rest Timer</h2>
+                        </h1>
+                    </div>
 
                     <TableContainer sx={{ width: "100%" }} component={Paper}>
                         <Table className='mr-0 ml-0' size="meduim" aria-label="a dense table">
@@ -103,30 +85,30 @@ const CardSelect = (props) => {
                                     {/* <TableCell className="input-title" align="center"></TableCell>  */}
                                 </TableRow>
                             </TableHead>
-                            {item?.sets?.map((set, ind) =>
-                                <TableBody key={set.key} >
+                            {item?.sets?.map((set, indexSet) =>
+                                <TableBody key={set?.key} >
                                     <TableRow >
-                                        <TableCell align="center" > {ind + 1}</TableCell>
-                                        {item.type.map((type) =>
+                                        <TableCell align="center" > {indexSet + 1}</TableCell>
+                                        {item.type.map((type, Ind) =>
                                             (type.id == 1) ?
                                                 <TableCell align="center">
-                                                    <InputAddKG Id={item.key} Index={ind} />
+                                                    <InputAddKG Id={item.key} separator={1} Ind={Ind} IndexSet={indexSet} />
                                                 </TableCell>
                                                 :
                                                 type.id == 2 ?
                                                     <TableCell align="center">
-                                                        <InputAddDistance Id={item.key} Index={ind} />
-                                                    </TableCell> 
+                                                        <InputAddDistance Id={item.key} separator={1} Ind={Ind} IndexSet={indexSet} />
+                                                    </TableCell>
                                                     :
                                                     type.id == 3 ?
                                                         <TableCell align="center">
-                                                            <InputAddREPS Id={item.key} Index={ind} />
+                                                            <InputAddREPS Id={item.key} separator={1} Ind={Ind} IndexSet={indexSet} />
                                                         </TableCell>
-                                                         :
+                                                        :
                                                         type.id == 4 ?
                                                             <TableCell align="center">
-                                                                <InputAddTime Id={item.key} Index={ind} />
-                                                            </TableCell> 
+                                                                <InputAddTime Id={item.key} separator={1} Ind={Ind} IndexSet={indexSet} />
+                                                            </TableCell>
                                                             : ''
                                         )
                                         }

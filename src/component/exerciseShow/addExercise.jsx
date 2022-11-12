@@ -1,4 +1,8 @@
 import React from 'react'
+import { Paper, Box, Hidden, Button, Modal, Typography, ListItemAvatar, Stack, TextField, Avatar,
+     ListItemText, List, ListItem, MenuItem, InputLabel, FormControl, Select, InputBase, IconButton 
+     
+    } from '@mui/material';
 
 const AddExercise = () => {
 

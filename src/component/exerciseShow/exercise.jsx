@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../layout/navbar';
 import '../../App.css';
 import '../../index.css';
@@ -15,7 +15,8 @@ import Fit11 from "../../img/fit1-1.jpg";
 import vFit1 from "../../video/Fit1.mp4";
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
+import AddExercise from './addExercise';
 
 const equipment = [
     {
@@ -59,10 +60,10 @@ const muscles = [
 ];
 
 function Exercise() {
-    const [exercise , setExercise] = useState()
+    const [exercise, setExercise] = useState()
 
     useEffect(() => {
-      console.log("heloo");
+        console.log("heloo");
         getExercise()
     }, [])
 
@@ -81,7 +82,7 @@ function Exercise() {
         console.log(result);
         setExercise(result.data)
     }
-console.log(exercise);
+    console.log(exercise);
 
 
     const {
@@ -103,6 +104,12 @@ console.log(exercise);
     const [openList, setOpenList] = React.useState(false);
     const handleOpenList = () => setOpenList(true);
     const handleCloseList = () => setOpenList(false);
+
+
+    // create exercise 
+    const [openCreateList, setOpenCreateList] = useState(false)
+    const handleOpenCreate = useState(true)
+    const handleCloseCreate = useState(false)
 
     const style = {
         position: 'absolute',
@@ -205,8 +212,16 @@ console.log(exercise);
 
                         </Box>
                         <div>
-                                                
-                     
+                            <div>
+                                <a onClick={handleOpenCreate}>+ create exercise</a>
+                                <Modal
+                                    open={openCreateList}
+                                    onClose={handleCloseCreate}
+                                >
+                                    <AddExercise />
+                                </Modal>
+                            </div>
+
                             <div>
                                 <Paper
                                     component="form"
@@ -227,8 +242,9 @@ console.log(exercise);
                             </div>
                             <div>
 
-                                    {exercise?.map((option) =>
-                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
+                                {exercise?.map((option) =>
+                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper',
+                                     maxHeight: 300, position: 'relative', overflow: 'auto', }}>
                                         <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
                                             <ListItemAvatar>
                                                 <Avatar alt="Remy Sharp" src={'option.avatar'} />
@@ -259,14 +275,14 @@ console.log(exercise);
 
                         <Paper elevation={2}  >
 
-                           { listShow.length > 0 ? <CardExercise /> :
+                            {listShow.length > 0 ? <CardExercise /> :
 
                                 <div className='fitnessIcon mt-20 p-20'>
                                     <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
                                     <h2>Select an exercise</h2>
                                 </div>
 
-                                            }
+                            }
 
 
                             <Hidden smUp>
@@ -316,9 +332,16 @@ console.log(exercise);
                                         </div>
                                     </Box>
                                     <div>
-                                        <div className='libaryTitle m-4'>
-                                            <h3>Library</h3>
-                                            <a>+ Create Exercise</a>
+                                        <div >
+                                            <div>
+                                                <a onClick={handleOpenCreate}>+ create exercise</a>
+                                                <Modal
+                                                    open={openCreateList}
+                                                    onClose={handleCloseCreate}
+                                                >
+                                                    <AddExercise />
+                                                </Modal>
+                                            </div>
                                         </div>
                                         <div>
                                             <Paper

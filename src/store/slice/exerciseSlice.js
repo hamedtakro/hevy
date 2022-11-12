@@ -7,6 +7,7 @@ const exerciseSlice = createSlice({
     name: 'exercise',
     initialState: {
         list: [],
+        title: '',
 
     },
     reducers: {
@@ -14,16 +15,18 @@ const exerciseSlice = createSlice({
 
             return {
                 ...state,
+                
                 list: [
                     ...state.list,
                     {
                         id: payload.id,
-                        key: Math.floor(Math.random()*1000),
+                        key: Math.floor(Math.random() * 1000),
                         en_title: payload.en_title,
                         fa_title: payload.fa_title,
-                         keywords: payload.keywords,
-                        type :payload.type.indices,
-                        sets:[]
+                        keywords: payload.keywords,
+                        type: payload.type.indices,
+                        restTimer: '',
+                        sets: []
                         // {index_id:'' , amount:'' } 
                     }
                 ]
@@ -38,15 +41,14 @@ const exerciseSlice = createSlice({
 
 
         addSet: (state, { payload }) => {
-            console.log(payload);
-            
+
             state.list = state.list.map((item, index) => {
-             let kok =  item.type.map((option , index)=> [{index_id:option.id , amount: '' }]  )
+                let kok = item.type.map((option, index) => [{ index_id: option.id, amount:''}])
                 return item.key == payload
                     ?
                     {
                         ...item,
-                        sets: [...item.sets , [item.type.map((option , index)=> [{index_id:option.id , amount: '' }]  )]]
+                        sets: [...item.sets, item.type.map((option, index) =>  [{ index_id: option.id, amount:''}] )]
                     }
                     : item
 
@@ -55,85 +57,63 @@ const exerciseSlice = createSlice({
 
 
         setInputKG: (state, { payload }) => {
-            const { kg, Id, Index } = payload 
-            console.log(kg ,Id , Index);
-            state.list = state.list.map((item) => {
-
-                return item.key == Id
-                    ? {
-                        ...item,
-                        sets: item.sets.map((option, ind) => Index == ind ? 
-
-                        option.map((item)=>
-                        item?.index_id == 1 ?
-                        [{ amount :kg} ] : item
-                        )
-                        : option)
-                    }
-                    : item
-            })
+            const { kg, Id, IndexSet, Ind } = payload
+            state.list.map((item) => item.key == Id ? item.sets[IndexSet][Ind][0].amount = kg : item)
         },
 
-        
+
+        setInputDistance: (state, { payload }) => {
+            const { distance, Id, IndexSet, Ind } = payload
+            state.list.map((item) => item.key == Id ? item.sets[IndexSet][Ind][0].amount = distance : item)
+
+        },
+
+
         setInputREPS: (state, { payload }) => {
-            const { REPS, Id, Index } = payload
-            state.list = state.list.map((item) => {
-                return item.key == Id
-                    ? {
-                        ...item,
-                        sets: item.sets.map((option, ind) => Index == ind ? 
-                        [{index_id : 3 , amount :REPS}] : option)
-                    }
-                    : item
-            })
+            const { REPS, Id, IndexSet, Ind } = payload
+            state.list.map((item) => item.key == Id ? item.sets[IndexSet][Ind][0].amount = REPS : item)
+
         },
 
 
         setInputTime: (state, { payload }) => {
-            const { time, Id, Index } = payload
+            const { time, Id, IndexSet, Ind } = payload
+            state.list.map((item) => item.key == Id ? item.sets[IndexSet][Ind][0].amount = time : item)
+        },
+
+
+
+        addRestTimer: (state, { payload }) => {
+            const { restTimer, Id } = payload
             state.list = state.list.map((item) => {
-                return item.key == Id
+                return item.key === Id
                     ? {
                         ...item,
-                        sets: item.sets.map((option, ind) =>Index == ind ?
-                        
-                        option.map((item)=>  
-                        item?.index_id == 4?
-                        [ { amount :time} ] :item
-                        )
-                        : option)
-                        // sets: item.sets.map((option, ind) => Index == ind ? 
-                        // [...option,{index_id : 4 , amount :time}] : option)
+                        restTimer: restTimer
                     }
                     : item
             })
         },
 
 
-        addTimer: (state, { payload }) => {
-            const { timer, Id } = payload
-            state.list = state.list.map((item) => {
-                return item.id === Id
-                    ? {
-                        ...item,
-                        timer: timer
-                    }
-                    : item
+        addNote: (state,{payload}) =>{
+            const {note , Id} = payload 
+            state.list = state.list.map((item)=> {
+                return item.key == Id 
+                ?{
+                    ...item ,
+                    note: note
+                } 
+                :item
             })
         },
 
+        addTitle: (state ,{payload}) =>{
+            const {mainTitle} = payload
+            state.title = mainTitle
 
-        done: (state, { payload }) => {
-            const { Index, Id, check } = payload
-            state.list = state.list.map((item) => {
-                return item.id == Id
-                    ? {
-                        ...item,
-                        set: item.set.map((option, index) => index == Index ? { ...option, done: check } : option)
-                    }
-                    : item
-            })
-        }
+        },
+
 
 
     }
@@ -142,6 +122,6 @@ const exerciseSlice = createSlice({
 )
 
 
-export const { setExercise, deleteExercise, addSet, setInputREPS, setInputKG,setInputTime, addTimer, done } = exerciseSlice.actions
+export const { setExercise, deleteExercise, addSet, setInputREPS, setInputKG, setInputDistance, setInputTime, addNote ,addTitle ,addRestTimer } = exerciseSlice.actions
 
 export default exerciseSlice.reducer

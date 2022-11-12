@@ -119,7 +119,7 @@ header-style {
 }
 
 .exercise-box {
-  max-width: 1024px;
+  max-width: 1124px;
   margin: 0px auto;
   padding: 20px 30px;
   direction: rtl;
@@ -127,6 +127,7 @@ header-style {
 
 
 .exercise-left {
+  direction: rtl;
   background-color: #fff;
   border: 1px solid rgb(170, 171, 176);
   border-radius: 8px;
@@ -154,6 +155,7 @@ header-style {
 .exercise-right {
   align-items: center;
   text-align: center;
+  max-width: 50rem;
 
 }
 
@@ -446,10 +448,16 @@ FormControl InputLabel {
   border-bottom: .1rem dashed rgba(54, 54, 54, 0.442);
 }
 
-.restTimer {
+.restTimerTitle {
   color: rgb(56, 56, 243);
 }
-
+.restTimer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  direction: ltr;
+justify-content: end
+}
 .imglist {
   min-width: 50px;
 
@@ -619,7 +627,11 @@ FormControl InputLabel {
 }
 
 .input-main-title {
-  width: max-content;
+  width: fixed;
+  direction: rtl;
+  min-height: 3rem;
+  font-family: 'vazir-Bold';
+  font-size: larger;
 
 }
 
@@ -656,8 +668,8 @@ FormControl InputLabel {
 .routin-style {
   width: 100%;
   min-height: 53rem;
-  background: rgb(241, 130, 179);
-  background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%);
+  /* background: rgb(241, 130, 179); */
+  /* background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%); */
   ;
   background-size: cover;
 }
@@ -666,7 +678,21 @@ FormControl InputLabel {
   
   width: 100%;
   min-height: 53rem;
-  background: rgb(241, 130, 179);
-  background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%);
+  /* background: rgb(241, 130, 179); */
+  /* background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%); */
   background-size: cover;
+}
+.row-done{
+  background:  radial-gradient(circle, rgb(12, 245, 16) 0%, rgba(5, 242, 100) 69%);
+}
+.cardMD {
+min-width: 500rem;
+
+}
+.titleInput{
+  width: fit-content;
+}
+.menuFilter{
+  direction: rtl ;
+  min-height: 5rem;
 }

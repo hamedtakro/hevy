@@ -1,178 +1,71 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {
     Grid, Card, CardHeader, FormControl, MenuItem, TextareaAutosize,
     Typography, CardContent, IconButton, InputLabel, Avatar, Table,
     TableCell, TableContainer, TableHead, TableBody, TableRow, Paper,
-    Menu,
-    Button
+    Menu, Modal, Hidden, ListItemAvatar, ListItemText, Box,
+    List, ListItem, Input, Divider, InputBase, TextField, Button
 } from '@mui/material';
 
-import {
-    Modal, Hidden, ListItemAvatar, ListItemText, Box,
-    List, ListItem, Input, Divider, InputBase, TextField
-} from '@mui/material';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 import CheckIcon from '@mui/icons-material/Check';
-
-import Fit1 from "../../../img/fit1.jpg";
-import Fit2 from "../../../img/fit2.jpg";
-import Fit3 from "../../../img/fit3.jpg";
-
-import { setRoute, updateAddExercise, addSet, deleteExercise } from '../../../store/slice/routinesdaySlice';
-
-import Navbar from '../../layout/navbar'
-import CheckBox from '../checkBox';
-
 import SearchIcon from '@mui/icons-material/Search';
-import EditeAddKG from './updateKg'
-import EditeAddREPS from './updateREPS'
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const equipment = [
-    {
-        value: 0,
-        label: 'All Equipment',
-    },
-    {
-        value: 'none',
-        label: 'None',
-    },
-    {
-        value: 'barbell',
-        label: 'Barbell',
-    },
-    {
-        value: 'dumbbell',
-        label: 'Dumbbell',
-    },
-    {
-        value: 'kettlebell',
-        label: 'Kettlebell',
-    },
-];
-const muscles = [
-    {
-        value: 0,
-        label: 'All Muscles',
-    },
-    {
-        value: 'abdominals',
-        label: 'Abdominals',
-    },
-    {
-        value: 'abductors',
-        label: 'Abductors',
-    },
-    {
-        value: 'shoulders',
-        label: 'Shoulders',
-    },
-];
-const exerciseDay = [
-    {
-        id: 1,
-        title: 'Ab Scissors',
-        body: 'Abdominals',
-        equipment: 'Dumbbell',
-        avatar: Fit1,
-        type: 'img',
-        set: [
-            { kg: 10, REPS: 2 },
-            { kg: 104, REPS: 23 },
-            { kg: 106, REPS: 22 }],
-        timer: '30',
-        kg: 'KG',
-        reps: 'REPS'
-    },
-    {
-        id: 2,
-        title: 'Ab Wheel',
-        body: 'Abdominals',
-        equipment: 'Dumbbell',
-        avatar: Fit1,
-        type: 'video',
-        set: [{ kg: 154, REPS: 43 }],
-        timer: '25',
-        kg: 'KG'
-    },
-    {
-        id: 3,
-        title: 'Arnold Press (Dumbbell)',
-        body: 'Shoulders ',
-        equipment: 'Barbell',
-        avatar: Fit3,
-        type: 'img',
-        set: [
-            { kg: 104, REPS: 255 },
-            { kg: 44, REPS: 13 }],
-        timer: '10',
-        reps: 'REPS',
-        kg: 'KG'
-    }
-]
-const exercise = [
-    {
-        id: 11,
-        title: 'Ab Scissors',
-        body: 'Abdominals',
-        equipment: 'Dumbbell',
-        avatar: Fit1,
-        type: 'img',
-        set: [],
-        timer: '',
-        kg: 'KG',
-        resp: 'RESP'
-    },
-    {
-        id: 12,
-        title: 'Ab Wheel',
-        body: 'Abdominals',
-        equipment: 'Dumbbell',
-        avatar: Fit1,
-        type: 'video',
-        set: [],
-        timer: '',
-        kg: 'KG'
-    }, {
-        id: 13,
-        title: 'Arnold Press (Dumbbell)',
-        body: 'Shoulders ',
-        equipment: 'Barbell',
-        avatar: Fit3,
-        type: 'img',
-        set: [],
-        timer: '',
-        resp: 'RESP'
-    }, {
-        id: 14,
-        title: 'Arnold Press (Dumbbell)',
-        body: 'Shoulders',
-        equipment: 'Barbell',
-        avatar: Fit2,
-        type: 'img',
-        set: [],
-        timer: ''
-    },
-]
+
+import { setRoutes, updateAddExercise, addSetUpdate, deleteExercise } from '../../../store/slice/routinesdaySlice';
+import { createUpdateRoutes, setUpdateRoutes } from '../../../store/slice/updateRoutineSlice';
+// import CheckBox from '../checkBox';
+
+import Navbar from '../../layout/navbar'
+
+import InputAddKG from '../input/inputAddKG';
+import InputAddDistance from '../input/inputAddDistance';
+import InputAddREPS from '../input/inputAddREPS';
+import InputAddTime from '../input/inputAddTime';
+import InputAddRestTimer from '../input/inputAddRestTimer'
+import InputAddNote from '../input/inputAddNote';
+import InputAddTitle from '../input/inputAddTitle';
 
 
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
-const RoutinesDay = () => {
+const EditeRoutin = () => {
 
+    const param = useParams()
     const dispatch = useDispatch()
 
     const list = useSelector(state => state.routinesday.list)
+    const updateRoute = useSelector(state => state.updateRoutine.list)
 
     const [count, setCount] = useState(1)
     const [timer, setTimer] = React.useState();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [exercises, setExercises] = useState()
+    const [equip, setEquip] = useState()
+    const [musc, setMusc] = useState()
+    const [route, setRoute] = useState()
+    const [successAPI, setSuccessAPI] = useState(true)
 
     const ITEM_HEIGHT = 48;
+
+
+    const idRoutine = list[0]?.id
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -181,188 +74,219 @@ const RoutinesDay = () => {
         setAnchorEl(null);
     };
 
+    useEffect(() => {
+        getExercise()
+        getEquipments()
+        getMuscles()
+    }, [])
 
 
-    // libery 
-    const [filterEquipment, setFilterEquipment] = useState(0)
-    const handlefilter = (e) => {
-        setFilterEquipment(e.target.value)
-        setFilterMuscles(0)
+    // libery ));
+
+    useEffect(() => {
+        if (successAPI == true) {
+            async function getExercise() {
+                let result = await fetch(`http://younikweb.ir/api/v1/routine/${param.id}`, {
+                    method: 'GET',
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                        "Content-Type": "appliction/json",
+                        "Accept": "application/json"
+                    },
+                    // body: JSON.stringify(item)
+                });
+                result = await result.json()
+                dispatch(setRoutes(result.data));
+                setRoute(result.data)
+                setSuccessAPI(false)
+            };
+            getExercise()
+        }
+    }, [])
+
+
+    async function getExercise() {
+        let result = await fetch("http://younikweb.ir/api/v1/exercises", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setExercises(result.data)
     }
-    const Filtered = filterEquipment == 0 ?
-        exercise :
-        exercise.filter((option) =>
-            option.equipment.toLowerCase().includes(filterEquipment.toLowerCase()));
-    const [filterMuscles, setFilterMuscles] = useState(0)
-    const handleFilter = (e) => {
-        setFilterMuscles(e.target.value)
-        setFilterEquipment(0)
+
+    async function getEquipments() {
+        let result = await fetch("http://younikweb.ir/api/v1/equipments", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setEquip(result.data)
     }
-    const filtered = filterMuscles == 0 ?
-        Filtered :
-        Filtered.filter((option) =>
-            option.body.toLowerCase().includes(filterMuscles.toLowerCase()));
-    const [search, setSearch] = useState()
-    const handleSearch = (e) => {
-        setSearch(e.target.value)
-        console.log(list)
+    async function getMuscles() {
+        let result = await fetch("http://younikweb.ir/api/v1/muscles", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setMusc(result.data)
     }
-    const searched = !search ?
-        filtered :
-        exercise.filter((option) =>
-            option.title.toLowerCase().includes(search.toLowerCase()));
-
-
-
 
     const open = Boolean(anchorEl)
 
-    const deleteexercise = (option) => {
-        console.log(option);
-        dispatch(deleteExercise({ option, list }))
-    }
 
-    const Timer = exerciseDay.map((item) => item.timer)
+    // const Timer = exerciseDay?.map((item) => item.timer)
 
     const handleChangeSelected = (e, id) => {
         setTimer(e.target.value);
         // dispatchManeager({ id, timer })
 
     }
-    const [done, setDone] = useState({
-        check: '',
-        ind: '',
-        id: ''
-    })
-    const doneSet = ({ Index, Id, check }) => {
 
-        setDone({ check: check, ind: Index, id: Id })
+    // add exercise
+    const handleList = (Id) => {
+        const chosen = exercises.find((item) => item.id == Id)
+
+        console.log(chosen);
+        dispatch(updateAddExercise({ chosen }))
+
+    }
+
+    // add set
+    const handleUpdateAddSet = (Id) => {
+        console.log(Id);
+        dispatch(addSetUpdate(Id))
     }
 
 
+    //delete
+    const handledelete = (option) => {
+        dispatch(deleteExercise(option))
+
+    }
 
 
+    // add title and create new state 
+    useEffect(() => {
+        dispatch(createUpdateRoutes(list[0]?.title))
 
+    }, [list])
+
+    
+    // send server
+    const [newRoute, setNewRoute] = useState(false)
+    const [successfull ,setSuccessfull] =useState(false)
+
+    const handleSendServer = () => {
+        let newList = list[0]
+        dispatch(setUpdateRoutes({ newList }))
+        setNewRoute(true)
+    }
 
     useEffect(() => {
-   dispatch(setRoute({ exerciseDay }))
-    }, []);
+        if (newRoute == true) {
+            console.log(updateRoute);
 
-    const handleList = (option) => {
-        const listexercise = exercise.find((item) => item.id == option)
+            console.log(idRoutine);
 
-        dispatch(updateAddExercise({ listexercise }))
+            let result = fetch(`http://younikweb.ir/api/v1/routine/${idRoutine}`, {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "appliction/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(updateRoute)
+            });
+            // setSuccessfull(true)
+        }
+
+    }, [newRoute])
+
+
+    // // response mobile hiden button
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
+
+
+
+    // search 
+
+    const [filterEquipment, setFilterEquipment] = useState('')
+    const [filterMuscles, setFilterMuscles] = useState('')
+    const [search, setSearch] = useState('')
+    const handleFilterEquipment = (e) => {
+        setFilterEquipment(e.target.value)
+        setSearch('')
     }
 
-    const handleSet = (option) => {
-        console.log(option);
-        dispatch(addSet({ option }))
+    const handleFilterMuscles = (e) => {
+        setFilterMuscles(e.target.value)
+        setSearch('')
     }
 
-    const handledelete = (option) => {
-        console.log('delete' + option);
-        dispatch(deleteExercise({ option }))
-        console.log(list);
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
     }
+
+    const Filtered = filterEquipment == 0 ?
+        exercises :
+        exercises.filter((option) =>
+            option.equipment_id == filterEquipment
+            // option.equipment.title.toLowerCase().includes(filterEquipment.toLowerCase())
+        );
+
+
+    const filtered = filterMuscles == 0 ?
+        Filtered :
+        Filtered.filter((option) =>
+            option.primary_muscle_id == filterMuscles
+        );
+
+
+    const searched = !search ?
+        filtered :
+        exercises.filter((option) =>
+            option.fa_title.toLowerCase().includes(search.toLowerCase()) ||
+            option.en_title.toLowerCase().includes(search.toLowerCase()))
+
+
+
     return (
         <div>
             <Navbar />
-            <div className='lg:container' >
-                <div className='exercise-box md:flex lg:flex sm:w-full' >
+            <div className='lg:container md:direction: rtl' >
 
-                    <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:mr-4 mt-6">
-                        {list.map((item) =>
-                            <Paper className='container mb-2' >
-                                <Card className='' sx={{ minWidth: '40rem', marginTop: 3 }} >
-                                    <CardHeader
-                                        avatar={
-                                            <Avatar aria-label="recipe">
-                                                <img className='imglist' src={item?.avatar} />
-                                            </Avatar>
-                                        }
-                                        action={
-                                            <button onClick={() => handledelete(item.id)}> <DeleteIcon /> </button>
+                <div className='exercise-box md:flex lg:flex sm:w-full lg:mr-21' >
 
-
-                                        }
-                                        title={<h1>{item.title}
-                                        </h1>}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="body2" color="text.secondary">
-                                            <TextareaAutosize
-                                                aria-label="empty textarea"
-                                                placeholder="add Notes here..."
-                                                style={{ width: '100%', height: 40 }}
-                                            />
-                                        </Typography>
-                                    </CardContent>
-                                    <Grid container spacing={0} >
-                                        <Grid xs={2}> <h1 className="m-3 restTimer">  <AvTimerIcon /> Rest Timer :
-                                        </h1>
-                                        </Grid>
-                                        <Grid xs={3}>
-                                            <FormControl sx={{ m: 1, minWidth: 80 }}>
-                                                <InputLabel className='bold' key={item.id} id="demo-simple-select-autowidth-label">{item.timer}</InputLabel>
-
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid sx={{ m: 3 }} xs={12}></Grid>
-
-                                        <TableContainer sx={{ width: "100%" }} component={Paper}>
-                                            <Table className='mr-0 ml-0' size="meduim" aria-label="a dense table">
-                                                <TableHead>
-                                                    <TableRow className='' >
-                                                        <TableCell align="center">SET</TableCell>
-                                                        {/* <TableCell align="center">PREVIOUS</TableCell> */}
-                                                        <TableCell align="center">KG</TableCell>
-                                                        <TableCell align="center">REPS</TableCell>
-                                                        <TableCell align="center"><CheckIcon /></TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-
-                                                <TableBody  >
-                                                    {item.set.map((option, ind) =>
-                                                        <TableRow key={ind} className={`${option.done == true ? 'btn-success' : ''}`}>
-
-                                                            <TableCell align="center" > {ind + 1}</TableCell>
-                                                            <TableCell align="center">
-                                                                <EditeAddKG id={item.id} prevKg={option.kg} Index={ind} />
-                                                            </TableCell>
-                                                            <TableCell align="center">
-                                                                <EditeAddREPS id={item.id} prevREPS={option.REPS} Index={ind} />
-                                                            </TableCell>
-                                                            <TableCell align="center"> <CheckBox doneSet={doneSet} Index={ind} Id={item.id} /></TableCell>
-                                                        </TableRow>)}
-                                                </TableBody>
-
-                                            </Table>
-                                        </TableContainer >
-                                        <Grid sx={{ m: 3 }} xs={12} >
-                                            <Button sx={{ width: '100%' }} onClick={() => handleSet(item.id)} size={'large'} variant="contained">+ Add Set</Button>
-                                        </Grid>
-                                    </Grid>
-                                </Card>
-
-
-                            </Paper>
-
-                        )}
-                    </div>
-
-                    <div className='exercise-left hidden max-md:w-full mb-5 lg:w-2/6 sm:inline'>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { margin: '4px 0', width: '100%' }, }} noValidate autoComplete="off">
-                            <h2>Filters</h2>
+                    <div className='exercise-left hidden max-md:w-full mb-5  lg:ml-7 sm:inline'>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { margin: '4px 0', width: '100%' }, }}
+                            noValidate autoComplete="off">
                             <div>
                                 <TextField
                                     id="outlined-select"
                                     select
                                     value={filterEquipment}
-                                    onChange={handlefilter}
+                                    onChange={handleFilterEquipment}
                                 >
-                                    {equipment.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
+                                    {equip?.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}  >
+                                            <h1 className="equipment-list">{option.title}</h1>
                                         </MenuItem>
                                     ))}
                                 </TextField>
@@ -372,49 +296,253 @@ const RoutinesDay = () => {
                                     id="outlined-select-currency"
                                     select
                                     value={filterMuscles}
-                                    onChange={handleFilter}
+                                    onChange={handleFilterMuscles}
                                 >
-                                    {muscles.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
+                                    {musc?.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            <h1 className="equipment-list">  {option.title}</h1>
                                         </MenuItem>
                                     ))}
                                 </TextField>
                             </div>
                         </Box>
-                        <libary>
-                            <div className='libaryTitle'>
-                                <h2>Library</h2>
-                            </div>
-                            <div>
-                                <Paper
-                                    component="form"
-                                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', backgroundColor: 'rgb(240, 240, 240);' }}
-                                >
-                                    <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
-                                        <SearchIcon />
-                                    </IconButton>
-                                    <InputBase
-                                        sx={{ ml: 1, flex: 1 }}
-                                        placeholder="Search Exercise"
-                                        inputProps={{ 'aria-label': 'search exercise' }}
+                        <div className='libaryTitle'>
+                        </div>
+                        <div>
+                            <Paper
+                                component="form"
+                                sx={{
+                                    p: '2px 4px', display: 'flex', alignItems: 'center',
+                                    backgroundColor: 'rgb(240, 240, 240);'
+                                }}
+                            >
+                                <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
+                                    <SearchIcon />
+                                </IconButton>
+                                <InputBase
+                                    sx={{ ml: 1, flex: 1 }}
+                                    placeholder="Search Exercise"
+                                    inputProps={{ 'aria-label': 'search exercise' }}
+                                onChange={handleSearch}
+                                value={search}
+                                />
+                            </Paper>
+                        </div>
+                        <div>
+                            {searched?.map((option) =>
+                                <List key={option.id} sx={{
+                                    direction: 'rtl', width: '100%',
+                                    bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto',
+                                }}>
+                                    <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
+                                        <ListItemAvatar>
+                                            <Avatar alt="Remy Sharp" src={'option.avatar'} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            alignItems="flex-start"
+                                            primary={
+                                                <Typography
+                                                    className="newRoute-exersise-title"
+                                                >
+                                                    {option.fa_title}
+                                                </Typography>
+
+                                            }
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        sx={{ display: 'inline' }}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                    </Typography>
+                                                    {option.primary_muscle.title}
+                                                </React.Fragment>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <hr className='border-t-2'></hr>
+                                </List>)}
+                        </div>
+                    </div>
+                    <div className="exercise-right max-md:w-full mb-5 lg:w-4/6 md:mr-4 md:ml-10 mt-6">
+                        <Button onClick={handleSendServer} variant='contained' className='input-title' > <h2 > ذخیره تغیرات</h2></Button>
+                        <h1> {list[0]?.title}</h1>
+                        {list[0]?.routine_items?.map((routes) =>
+                            < >
+                                <Card className='' sx={{ maxWidth: 700, marginTop: 5 }} >
+                                    <CardHeader
+                                        avatar={
+                                            <Avatar aria-label="recipe">
+                                                <img className='imglist' src={"item?.avatar"} />
+                                            </Avatar>
+                                        }
+                                        action={
+                                            <button onClick={() => handledelete(routes.id)}> <DeleteIcon /> </button>
+
+
+                                        }
+                                        title={<h1 className='title-card'>{routes.exercise.fa_title}
+                                        </h1>}
+                                    />
+                                    <CardContent>
+                                        <Typography variant="body2" color="text.secondary">
+                                            <InputAddNote amount={routes.note} separator={2} Id={routes.id} />
+
+                                        </Typography>
+                                    </CardContent>
+
+                                    <div className='restTimer' xs={12}>
+                                        <InputAddRestTimer separator={2} Id={routes.id} amount={routes.rest_timer} />
+                                        <h1 className="m-3 restTimerTitle ">
+                                            <AvTimerIcon />  <h2>: Rest Timer</h2>
+                                        </h1>
+                                    </div>
+
+                                    <TableContainer sx={{ width: "100%" }} component={Paper}>
+                                        <Table className='mr-0 ml-0' size="meduim" aria-label="a dense table">
+                                            <TableHead>
+                                                <TableRow className='' >
+                                                    <TableCell align="center">SET</TableCell>
+                                                    <TableCell align="center">PREVIOUS</TableCell>
+                                                    <TableCell align="center">KG</TableCell>
+                                                    <TableCell align="center">Distance</TableCell>
+                                                    <TableCell align="center">time</TableCell>
+
+                                                </TableRow>
+                                            </TableHead>
+
+                                            <TableBody  >
+                                                {routes.routine_sets.map((sets, indexSet) =>
+
+                                                    <TableRow className={`${sets.done == true ? 'row-done' : ''}`} >
+                                                        <TableCell align="center" > {indexSet + 1}</TableCell>
+                                                        <TableCell align="center" > -</TableCell>
+                                                        {sets.amount.map((item) =>
+
+                                                            <TableCell align="center"  >
+                                                                {item[0]?.index_id == 1 || item?.index_id == 1 ?
+                                    <InputAddKG Id={routes.id} separator={2} Index_Id={item[0]?.index_id || item?.index_id}          
+                                    SetId={sets.id} amount={item[0]?.amount || item?.amount} /> :
+                                    item[0]?.index_id == 2 || item?.index_id == 2 ?
+                                        <InputAddDistance Id={routes.id} separator={2} Index_Id={item[0]?.index_id || item?.index_id}
+                                        SetId={sets.id} amount={item[0]?.amount || item?.amount} /> :
+                                        item[0]?.index_id == 3 || item?.index_id == 3 ?
+                                            <InputAddREPS Id={routes.id} separator={2} Index_Id={item[0]?.index_id || item?.index_id}
+                                            SetId={sets.id} amount={item[0]?.amount || item?.amount} /> :
+                                            item[0]?.index_id == 4 || item?.index_id == 4 ?
+                                            <InputAddTime Id={routes.id} separator={2} Index_Id={item[0]?.index_id || item?.index_id}
+                                            SetId={sets.id} amount={item[0]?.amount || item?.amount} /> : ''
+                                                                }
+                                                            </TableCell>
+                                                      )}
+                                                    </TableRow>
+                                                )}
+
+                                            </TableBody>
+
+                                        </Table>
+                                    </TableContainer >
+                                    <Grid sx={{ m: 3 }} xs={12} >
+                                        <Button sx={{ width: '100%' }} 
+                                        onClick={() => handleUpdateAddSet(routes.id)} size={'large'} 
+                                        variant="contained">+ Add Set</Button>
+                                    </Grid>
+
+                                </Card>
+
+
+                            </>
+
+                        )}
+
+
+                        <Hidden smUp>
+                            <Button onClick={handleOpenModal} className="float-end  md:h-10 " color="primary" variant="contained" >ADD exercise
+                            </Button>
+                        </Hidden>
+                        <Modal
+                            open={openModal}
+                            onClose={handleCloseModal}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Box component="form" container
+                                    sx={{ '& .MuiTextField-root': { marginTop: '.5rem ', width: '100%' }, }}
+                                    noValidate autoComplete="off">
+                                    <div>
+                                        <TextField
+                                            id="outlined-select"
+                                            select
+                                            value={filterEquipment}
+                                            onChange={handleFilterEquipment}
+                                        >
+                                            {equip?.map((option) => (
+                                                <MenuItem key={option.id} value={option.id}  >
+                                                    <h1 className="equipment-list">{option.title}</h1>
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </div>
+                                    <div>
+                                        <TextField
+                                            id="outlined-select-currency"
+                                            select
+                                            value={filterMuscles}
+                                            onChange={handleFilterMuscles}
+                                        >
+                                            <MenuItem ><h1> عضلات</h1></MenuItem>
+                                            {musc?.map((option) => (
+                                                <MenuItem key={option.id} value={option.id}>
+                                                    <h1 className="equipment-list">  {option.title}</h1>
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </div>
+                                </Box>
+                                <div className='libaryTitle'>
+                                </div>
+                                <div>
+                                    <Paper
+                                        component="form"
+                                        sx={{
+                                            p: '2px 4px', display: 'flex', alignItems: 'center',
+                                            backgroundColor: 'rgb(240, 240, 240);'
+                                        }}
+                                    >
+                                        <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
+                                            <SearchIcon />
+                                        </IconButton>
+                                        <InputBase
+                                            sx={{ ml: 1, flex: 1 }}
+                                            placeholder="Search Exercise"
+                                            inputProps={{ 'aria-label': 'search exercise' }}
                                         onChange={handleSearch}
                                         value={search}
-                                    />
-                                </Paper>
-                            </div>
-                            <div>
-                                {searched.map((option) =>
-                                    <List key={option.id} sx={{
-                                        width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto',
-                                    }}>
-                                        <button onClick={() => handleList(option.id)} key={option.id} className="flex">
-                                            <ListItem alignItems="flex-start">
+                                        />
+                                    </Paper>
+                                </div>
+                                <div>
+                                    {searched?.map((option) =>
+                                        <List key={option.id} sx={{
+                                            direction: 'rtl', width: '100%',
+                                            bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto'
+                                        }}>
+                                            <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
                                                 <ListItemAvatar>
-                                                    <Avatar alt="Remy Sharp" src={option.avatar} />
+                                                    <Avatar alt="Remy Sharp" src={'option.avatar'} />
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary={option.title}
+                                                    alignItems="flex-start"
+                                                    primary={
+                                                        <Typography
+                                                            className="newRoute-exersise-title"
+                                                        >
+                                                            {option.fa_title}
+                                                        </Typography>
+                                                    }
                                                     secondary={
                                                         <React.Fragment>
                                                             <Typography
@@ -424,19 +552,20 @@ const RoutinesDay = () => {
                                                                 color="text.primary"
                                                             >
                                                             </Typography>
-                                                            {option.body}
+                                                            {option.primary_muscle.title}
                                                         </React.Fragment>
                                                     }
                                                 />
                                             </ListItem>
-                                        </button>
-                                    </List>)}
-                            </div>
-                        </libary>
+                                            <hr className='border-t-2'></hr>
+                                        </List>)}
+                                </div>
+                            </Box>
+                        </Modal>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
-export default RoutinesDay
+export default EditeRoutin

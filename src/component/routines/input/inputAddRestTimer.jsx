@@ -1,25 +1,26 @@
 import React , {useState , useEffect }from 'react'
 import { useDispatch } from 'react-redux';
-import {addTimer } from '../../../store/slice/setSlice'
+import {addRestTimer } from '../../../store/slice/exerciseSlice';
+import {setUpdateRestTimer} from '../../../store/slice/routinesdaySlice'
 import {FormControl ,InputLabel ,Select ,MenuItem} from '@mui/material'
 
-const InputAddRestTimer = ({Id}) => {
+const InputAddRestTimer = ({Id , separator ,amount}) => {
 
-    const [timer, setTimer] = useState(0);
+    const [restTimer, setRestTimer] = useState(amount);
 
     const dispatch = useDispatch()
 
     const handleChangeTimer = (e) => {
-        setTimer(e.target.value);
+        setRestTimer(e.target.value);
 
     }
 
     useEffect(() => {
         
-        dispatch(addTimer ({ Id, timer }))
-
+       if(separator==1) {dispatch(addRestTimer ({ Id, restTimer }))}
+        if(separator==2){dispatch(setUpdateRestTimer({Id , restTimer}))}
     
-    }, [timer])
+    }, [restTimer])
     
 
     return (
@@ -32,7 +33,7 @@ const InputAddRestTimer = ({Id}) => {
                     onChange={handleChangeTimer}
                     autoWidth
                     label="timer"
-                    value={timer}
+                    value={restTimer}
                 >
                     <MenuItem value={0}>OFF</MenuItem>
                     <MenuItem value={5}> 5 s</MenuItem>

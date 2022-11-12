@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{Suspense} from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
@@ -34,11 +34,11 @@ root.render(
           <Route path="settings" element={<Settings />} />
 
           <Route element={<PrivateRoutes />}>
-            <Route path="routines" element={<Routines />} />
+            <Route path="routines" element={<Suspense fallback={<h3>loading ....</h3>}><Routines /></Suspense> } />
             <Route path="exercise" element={<Exercise />} />
             <Route path="newroutin" element={<Newroutin />} />
             <Route path="routinesDay/:id" element={<RoutinesDay />} />
-            <Route path="editeRoutin" element={<EditeRoutines />} />
+            <Route path="editeRoutin/:id" element={<EditeRoutines />} />
           </Route>
           
         </Routes>

@@ -3,21 +3,18 @@ import Navbar from '../layout/navbar';
 import '../../App.css';
 import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import ListIcon from '@mui/icons-material/List';
-import { width } from '@mui/system';
 import RoutinesDay from './routinesDay';
 import { NavLink } from 'react-router-dom';
 import {setRoute} from '../../store/slice/routinesdaySlice'
+import App from '../layout/home'
+import ExampleRoutines from './exampleRoutines'
+import { Navigate , Outlet } from 'react-router-dom';
 
 function Routines() {
 
     const dispatch = useDispatch()
-
+    const [refresh , setRefresh] =useState(true)
     const [routeTitle, setRoute] = useState()
     useEffect(() => {
 
@@ -35,10 +32,25 @@ function Routines() {
             setRoute(result.data)
         };
         getExercise()
+        setRefresh(false)
+    }, [refresh])
 
-    }, [])
+    const deleteRoutes = async (Id) => {
 
-
+             let result = await fetch(`http://younikweb.ir/api/v1/routine/${Id}`, {
+               method: 'DELETE',
+               headers: {
+                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                 "Content-Type": "appliction/json",
+                 "Accept": "application/json"
+               },
+               // body: JSON.stringify(item)
+               
+             });
+             setRefresh(true)
+         } 
+       
+     
     return (
         <div className='routin-style' >
             <Navbar />
@@ -57,7 +69,7 @@ function Routines() {
                         {routeTitle?.map((item)=> 
                         <div className='displayStyle listBox'>
                             <NavLink to={`/routinesDay/${item.id}`} >{item.title}</NavLink>
-                            <MoreHorizIcon />
+                            <ExampleRoutines Id={item.id}  deleteRoutes={deleteRoutes}/>
                         </div>
                        ) }
                     </div>

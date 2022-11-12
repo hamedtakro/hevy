@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import react , {useState} from 'react'
 import Checkbox from '@mui/material/Checkbox';
 import { done } from '../../store/slice/exerciseSlice';
 import { useDispatch } from 'react-redux';
 import {setDone} from '../../store/slice/routinesdaySlice'
 
-const CheckBox = ({ Id, Index, doneSet }) => {
+const CheckBox = ({ IdSet, IdEx }) => {
+  
   const [check, setCheck] = useState(true)
-
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -14,8 +14,8 @@ const CheckBox = ({ Id, Index, doneSet }) => {
 
   const success = () => {
     setCheck(!check)
-
-    dispatch(setDone({Id , check , Index}))
+    console.log('ok done')
+    dispatch(setDone({IdSet , check , IdEx}))
   }
 
 
