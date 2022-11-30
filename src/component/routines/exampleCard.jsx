@@ -7,9 +7,10 @@ import { useDispatch } from 'react-redux'
 import App from '../../App'
 import Routines from './routines'
 import { deleteExercise } from '../../store/slice/exerciseSlice'
+import {updateDeleteExercise} from '../../store/slice/routinesdaySlice'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import {Typography} from '@mui/material'
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -17,9 +18,10 @@ function classNames(...classes) {
 export default function ExampleCard({ Id  ,seperator}) {
  const dispatch = useDispatch()
     // const [refresh , setRefresh] = useState(false)
+    console.log(Id , seperator);
     const handleDelete = () => {
         if(seperator == 1){dispatch(deleteExercise(Id))}
-        // if(seperator == 2){dispatchUpdateDelete(Id)}
+        if(seperator == 2){dispatch(updateDeleteExercise(Id))}
 }
 
     return (
@@ -41,7 +43,7 @@ export default function ExampleCard({ Id  ,seperator}) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute  z-10 mt-2 w-16 origin-top-right  rounded-md bg-white shadow-lg ring-1
+                <Menu.Items className="example absolute  z-10 mt-2  origin-top-right  rounded-md bg-white shadow-lg ring-1
                 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1  w-1 ">
                         <Menu.Item>
@@ -51,10 +53,10 @@ export default function ExampleCard({ Id  ,seperator}) {
                                     href="#"
                                     className={classNames(
                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                        'block pl-8 pr-1    py-2 text-sm'
+                                        ' pl-8 pr-1    py-2 text-sm'
                                     )}
                                 >
-                                 <div className='flex  row-auto'> <h2>delete</h2>  <DeleteIcon /> </div>
+                                 <div className='flex  '><Typography>  حذف </Typography>   <DeleteIcon /> </div>
                                 </a>
                             )}
                         </Menu.Item>

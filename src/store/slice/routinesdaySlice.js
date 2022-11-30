@@ -6,10 +6,13 @@ const routinesdaySlice = createSlice({
         list: [],
     },
     reducers: {
+        remove : (state, {payload}) =>{
+            state.list = []
+        },
 
         setRoutes: (state, { payload }) => {
-            state.list.push(payload)
-            // state.list.push(item)          
+            console.log(payload);
+            state.list.push(payload)          
         },
 
 
@@ -40,7 +43,7 @@ const routinesdaySlice = createSlice({
                 note: '',
                 order: 1,
                 rest_timer: '',
-                exercise : {id:chosen.id , fa_title: chosen.fa_title , en_title: chosen.en_title },
+                exercise : {id:chosen.id , fa_title: chosen.fa_title , en_title: chosen.en_title , type:chosen.type},
                 routine_sets: []
             })
             )
@@ -49,7 +52,7 @@ const routinesdaySlice = createSlice({
         },
 
 
-        deleteExercise: (state, { payload }) => {
+        updateDeleteExercise: (state, { payload }) => {
             state.list = state.list.map((items) => {
                 return {
                     ...items,
@@ -69,7 +72,8 @@ const routinesdaySlice = createSlice({
                         item.routine_sets.push(
                             {
                                 id: Math.floor(Math.random() * 1000),
-                                amount: [{ index_id: 1, amount: '' }, { index_id: 2, amount: '' }, { index_id: 4, amount: '' }]
+                                amount: item.exercise.type.indices.map((type) => [ 
+                                 { index_id: type.id, amount: '' } ])
                             }
                         )
                         : item))
@@ -207,6 +211,6 @@ const routinesdaySlice = createSlice({
 
 })
 
-export const { setRoutes, setDone, addSetUpdate, deleteExercise, setUpdateNote, setUpdateRestTimer, updateAddExercise, setUpdateInputKg, setUpdateInputREPS, setUpdateInputDistance, setUpdateInputTime } = routinesdaySlice.actions
+export const { remove,setRoutes, setDone, addSetUpdate, updateDeleteExercise, setUpdateNote, setUpdateRestTimer, updateAddExercise, setUpdateInputKg, setUpdateInputREPS, setUpdateInputDistance, setUpdateInputTime } = routinesdaySlice.actions
 
 export default routinesdaySlice.reducer

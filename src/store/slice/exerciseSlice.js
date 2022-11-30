@@ -12,19 +12,19 @@ const exerciseSlice = createSlice({
     },
     reducers: {
         setExercise: (state, { payload }) => {
-
+            const {chosen} = payload
             return {
                 ...state,
                 
                 list: [
                     ...state.list,
                     {
-                        id: payload.id,
+                        id: chosen.id,
                         key: Math.floor(Math.random() * 1000),
-                        en_title: payload.en_title,
-                        fa_title: payload.fa_title,
-                        keywords: payload.keywords,
-                        type: payload.type.indices,
+                        en_title: chosen.en_title,
+                        fa_title: chosen.fa_title,
+                        keywords: chosen.keywords,
+                        type: chosen.type.indices,
                         restTimer: '',
                         sets: []
                         // {index_id:'' , amount:'' } 

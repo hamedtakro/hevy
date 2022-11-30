@@ -21,7 +21,7 @@ const InputAddREPS = ({IndexSet, SetId ,Index_Id ,separator, Id ,amount, Ind}) =
 
 
     return (
-        <input key={IndexSet} variant="filled" value={REPS} onChange={ handleInputREPS} className='inputCard' type='number'></input>
+        <input placeholder='0' key={IndexSet} variant="filled" value={REPS} onChange={ handleInputREPS} className='inputCard' type='number'></input>
 
     )
 }

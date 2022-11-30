@@ -22,7 +22,7 @@ const InputAddNote = ({  Id ,separator ,amount }) => {
         <Typography variant="body2" color="black     " style={{fontSize :' 1.2rem'}}>
             <TextareaAutosize
                 aria-label="empty textarea"
-                placeholder=" Note..."
+                placeholder="   یادداشت ... "
                 style={{ width: '100%', height: 40 }}
                 value={note}
                 onChange={ handleInputNote}

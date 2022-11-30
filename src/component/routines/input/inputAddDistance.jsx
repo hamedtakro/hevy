@@ -5,6 +5,7 @@ import {setUpdateInputDistance} from '../../../store/slice/routinesdaySlice'
 
 const InputAddDistance = ({IndexSet,separator, SetId ,Index_Id , Id,amount , Ind}) => {
 
+
     const [distance, setDistance] = useState(amount)
     const dispatch = useDispatch()
 
@@ -21,7 +22,7 @@ const InputAddDistance = ({IndexSet,separator, SetId ,Index_Id , Id,amount , Ind
 
 
     return (
-        <input key={IndexSet} variant="filled" value={distance} onChange={ handleInputDistance} className='inputCard' type='number'>
+        <input placeholder='0' key={IndexSet} variant="filled" value={distance} onChange={ handleInputDistance} className='inputCard' type='number'>
         </input>
 
     )

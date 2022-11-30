@@ -25,7 +25,7 @@ const InputAddTime = ({ IndexSet,separator, SetId ,Index_Id, Id ,amount, Ind }) 
   
     return (
   
-      <input key={IndexSet} variant="filled" value={time} onChange={handleInputTime} className='inputCard' type='number'>
+      <input placeholder='0' key={IndexSet} variant="filled" value={time} onChange={handleInputTime} className='inputCard' type='number'>
       
       </input>
   

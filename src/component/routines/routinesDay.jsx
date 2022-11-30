@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CardRoutineDay from './cardRoutineDay';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-
 const RoutinesDay = () => {
 
     const params = useParams()

@@ -25,7 +25,7 @@ const InputAddKG = ({ IndexSet, Id ,Ind ,separator ,amount,SetId ,Index_Id}) => 
   
     return (
   
-      <input key={IndexSet} variant="filled" value={kg} onChange={handleInputKg} className='inputCard' type='number'>
+      <input placeholder='0' key={IndexSet} variant="filled" value={kg} onChange={handleInputKg} className='inputCard' type='number'>
       
       </input>
   

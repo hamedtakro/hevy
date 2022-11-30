@@ -18,13 +18,13 @@ const CardExercise = () => {
       {list?.map((option) => <div> <h2 className='font-bold text-xl'>{option.fa_title}</h2>
         <div className='my-4 flex'>
 
-        {/*  <>
+          <>
             {option.type == 'img' ?
               <img className='border-2 py-10 rounded-lg w-5/5'  alt="Travis Howard" src={option.avatar} />
               : <video className='border-2 rounded-lg w-5/5' autoPlay loop muted>
                 <source src={option.video} type="video/mp4" />
               </video>}
-  </>  */}
+  </>  
         </div>
 
         

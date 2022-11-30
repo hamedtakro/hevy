@@ -1,27 +1,29 @@
-import React ,{useState} from 'react'
+import React, { useState } from 'react'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { NavLink  } from 'react-router-dom'
-import {useDispatch} from 'react-redux'
+import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import App from '../../App'
 import Routines from './routines'
+import { Typography } from '@mui/material'
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 
-export default function ExampleRoutines( Props ) {
+export default function ExampleRoutines(Props) {
 
-// const [refresh , setRefresh] = useState(false)
+  // const [refresh , setRefresh] = useState(false)
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div"  className="relative  inline-block text-left ">
       <div>
-        <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-          more
-          <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+        <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-100 bg-white px-2  py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+          <Typography className='hidden sm:flex'> بیشتر</Typography>
+          <MoreVertIcon className='sm:hidden'/>
         </Menu.Button>
       </div>
 
@@ -34,7 +36,7 @@ export default function ExampleRoutines( Props ) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-38 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
@@ -45,21 +47,22 @@ export default function ExampleRoutines( Props ) {
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  edite
+                  <Typography className='exampleMenu'> ویرایش</Typography>
                 </NavLink>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={()=>Props.deleteRoutes(Props.Id)}
+                  onClick={() => Props.deleteRoutes(Props.Id)}
                   href="#"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  delete
+                  <Typography> حذف</Typography>
+
                 </a>
               )}
             </Menu.Item>

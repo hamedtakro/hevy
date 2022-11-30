@@ -20,10 +20,11 @@
     url('fonts/Vazir-Bold.ttf') format('truetype');
 }
 
-body {
-  background-color: rgb(252, 252, 252);
-  font-family: 'vazir-Bold';
+.fv {
+  font-family: 'vazir';
 }
+
+
 
 .title-card {
   font-family: 'vazir-Bold';
@@ -111,11 +112,28 @@ header-style {
   min-height: 100%;
 }
 
+.name-user {
+  display: flex;
+  flex-direction: row;
+  font-family: 'vazir-Bold';
+  text-align: center;
+  font-weight: 500;
+  font-size: larger;
+  color: #676a6b;
+}
 
 .routin-box {
-  max-width: 1024px;
+  direction: rtl;
+  max-width: 65%;
   margin: 0px auto;
-  padding: 20px;
+  padding: 5px;
+}
+
+.routinBoxMobile {
+  direction: rtl;
+  max-width: 95%;
+  margin: 0px auto;
+  padding: 5px;
 }
 
 .exercise-box {
@@ -133,6 +151,7 @@ header-style {
   border-radius: 8px;
   padding: 10px 10px;
   max-width: 19rem;
+  max-height: 43rem;
   text-align: right;
 }
 
@@ -159,8 +178,25 @@ header-style {
 
 }
 
+.exercise-right p {
+  font-family: 'vazir';
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: rgb(24, 15, 15);
+  flex: auto;
+}
+
+
+
+
+
 .displayStyle {
   display: flex;
+  direction: rtl;
+}
+
+.displayStyle p {
+  font-family: 'vazir-Bold';
 }
 
 .textfield {
@@ -190,9 +226,7 @@ header-style {
   align-self: flex-end;
 }
 
-.displayStyle h2 {
-  color: rgb(109, 114, 127);
-}
+
 
 
 .listBox {
@@ -212,6 +246,20 @@ header-style {
 .listBox a {
   font-size: 20px;
   font-weight: bold;
+}
+
+.listBoxMobile {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  flex: 1 1 0%;
+  padding: 16px;
+  margin: 20px 0;
+  border: 1px solid rgb(170, 171, 176);
+  border-radius: 8px;
 }
 
 .libaryTitle {
@@ -290,6 +338,7 @@ header-style {
 }
 
 .modalBox {
+  direction: rtl;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -384,7 +433,7 @@ FormControl InputLabel {
 }
 
 .saveExercise button {
-  cursor: default;
+  /* cursor: default; */
   pointer-events: none;
   width: 200px;
   display: flex;
@@ -408,6 +457,8 @@ FormControl InputLabel {
   padding: 200px 0;
   min-height: 100%;
   text-align: center;
+  min-height: 600px;
+
 }
 
 .homeStyle h1 {
@@ -449,25 +500,34 @@ FormControl InputLabel {
 }
 
 .restTimerTitle {
-  color: rgb(56, 56, 243);
+  color: rgb(79, 79, 86);
 }
-.restTimer{
+
+.restTimer {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   direction: ltr;
-justify-content: end
+  justify-content: end
 }
+
 .imglist {
   min-width: 50px;
 
 }
 
-.fitnessIcon {
+.emptyRight {
   min-width: max-content;
   min-height: 300px;
   justify-content: center;
   text-align: center;
+}
+
+.fitnessIcon {
+  font-size: 10rem;
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  rotate: -45deg;
 }
 
 .btnop {
@@ -506,10 +566,21 @@ justify-content: end
 
 }
 
+.example {
+  min-width: 6rem;
+}
+
 .setting-box {
+  min-height: 43rem;
   max-width: 1100px;
   margin: 0px auto;
   padding: 20px 10px;
+  direction: rtl;
+  justify-content: flex-end;
+}
+
+.setting-box p {
+  font-family: 'vazir';
 }
 
 .titleSetting {
@@ -517,6 +588,7 @@ justify-content: end
 }
 
 .setting-Right {
+  /* min-height: 43rem; */
   background-color: #fff;
   border: 1px solid rgb(170, 171, 176);
   border-radius: 8px;
@@ -556,6 +628,34 @@ justify-content: end
 
 }
 
+.buttonLogin {
+  margin-top: .5rem;
+  width: 80%;
+  height: 3rem;
+}
+
+.inputLogin p {
+  font-family: 'vazir-Bold ';
+  font-size: larger;
+
+}
+
+.inputSend {
+  text-align: center;
+  justify-content: center;
+  margin-top: .8rem;
+  width: 50%;
+  height: 2.5rem;
+  background-color: #d8d9dd8b;
+
+}
+
+.inputSend p {
+  font-family: 'vazir-Bold ';
+  font-size: larger;
+
+}
+
 .inputLogins {
   margin-top: 1.5rem;
   display: flex;
@@ -564,9 +664,23 @@ justify-content: end
   align-items: center;
 }
 
-.titleLogin {
-  text-align: center;
+.boxLogin {
+  background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+}
+
+.login {
+  min-height: 43.5rem;
+  direction: rtl;
+  background-repeat: no-repeat;
+  background-color: #E4E4E1;
+ background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
+ 	background-blend-mode: normal, multiply;
+}
+
+.titleLogin p {
   font-size: larger;
+  font-family: 'vazir-Bold';
+  text-align: center;
   color: #1c2826;
 }
 
@@ -590,12 +704,9 @@ justify-content: end
   margin-top: 7rem;
 }
 
-.login {
-  background-image: url(./img/Loginbg3.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 750px;
-  text-align: right;
+
+.login p {
+  font-family: 'vaizr';
 }
 
 .paperLogin {
@@ -613,13 +724,6 @@ justify-content: end
   /* font-size: large; */
 }
 
-.name-user {
-  font-family: 'vazir-Bold';
-  text-align: right;
-  font-weight: 500;
-  font-size: larger;
-  color: #42d0f7;
-}
 
 .list-button {
   width: 100%;
@@ -665,34 +769,74 @@ justify-content: end
   margin-top: 1rem;
 }
 
+.buttonRoute {
+  color: white;
+  font-family: 'vazir-Bold';
+}
+
 .routin-style {
+  justify-content: center;
+  text-align: center;
   width: 100%;
-  min-height: 53rem;
+  min-height: 660px;
   /* background: rgb(241, 130, 179); */
   /* background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%); */
   ;
   background-size: cover;
 }
 
-.newRoutin-style { 
-  
+.newRoutin-style {
+
   width: 100%;
-  min-height: 53rem;
+  min-height: 600px;
   /* background: rgb(241, 130, 179); */
   /* background: radial-gradient(circle, rgba(241, 130, 179, 1) 0%, rgba(101, 166, 242, 0.9727241238292192) 69%); */
   background-size: cover;
 }
-.row-done{
-  background:  radial-gradient(circle, rgb(12, 245, 16) 0%, rgba(5, 242, 100) 69%);
+
+.row-done {
+
+  background-image: linear-gradient(to top, #0fd850 0%, #41f400 100%);
 }
+
 .cardMD {
-min-width: 500rem;
+  min-width: 500rem;
 
 }
-.titleInput{
+
+.titleInput {
   width: fit-content;
 }
-.menuFilter{
-  direction: rtl ;
+
+.menuFilter {
+  direction: rtl;
   min-height: 5rem;
+}
+
+.exampleMenu p {
+  direction: rtl;
+}
+
+.fontB p {
+  font-family: 'vazir-Bold';
+}
+
+.button p {
+  color: white;
+  margin-top: .7rem;
+}
+
+::placeholder {
+  font-family: 'vazir';
+  /* margin-right: .7rem; */
+}
+
+.footer {
+
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+
+.footer p{
+  font-family: 'vazir';
 }

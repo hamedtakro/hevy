@@ -1,6 +1,6 @@
 import React ,{ useState , useEffect}from 'react'
 import { useDispatch } from 'react-redux'
-import {Input} from '@mui/material'
+import {Input, Typography} from '@mui/material'
 import { addTitle } from '../../../store/slice/exerciseSlice'
 import { setTitle } from '../../../store/slice/updateRoutineSlice'
 
@@ -22,7 +22,7 @@ const InputAddTitle = () => {
     return (
         <div>
             <Input className="input-main-title"
-                placeholder="Routine Title"
+                placeholder="نام روتین (ضروری)"
                 value={mainTitle} onChange={handleTitle}
             />
         </div>

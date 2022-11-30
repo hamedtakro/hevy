@@ -8,63 +8,21 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import CardExercise from './cardExercise';
 import { exerciseShow } from '../../store/slice/exerciseShow'
-import Fit1 from "../../img/fit1.jpg";
-import Fit2 from "../../img/fit2.jpg";
-import Fit3 from "../../img/fit3.jpg";
-import Fit11 from "../../img/fit1-1.jpg";
-import vFit1 from "../../video/Fit1.mp4";
-import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AddExercise from './addExercise';
-
-const equipment = [
-    {
-        value: 0,
-        label: 'All Equipment',
-    },
-    {
-        value: 'none',
-        label: 'None',
-    },
-    {
-        value: 'barbell',
-        label: 'Barbell',
-    },
-    {
-        value: 'dumbbell',
-        label: 'Dumbbell',
-    },
-    {
-        value: 'kettlebell',
-        label: 'Kettlebell',
-    },
-];
-const muscles = [
-    {
-        value: 0,
-        label: 'All Muscles',
-    },
-    {
-        value: 'abdominals',
-        label: 'Abdominals',
-    },
-    {
-        value: 'abductors',
-        label: 'Abductors',
-    },
-    {
-        value: 'shoulders',
-        label: 'Shoulders',
-    },
-];
+import LabelBottomNavigation from '../layout/buttomNavigation';
+import MenuExercise from '../routines/menuExercise';
 
 function Exercise() {
+
     const [exercise, setExercise] = useState()
+    const [equipments, setEquipments] = useState()
+    const [muscles, setMuscles] = useState()
 
     useEffect(() => {
-        console.log("heloo");
-        getExercise()
+        getExercise();
+        getEquipments();
+        getMuscles()
     }, [])
 
 
@@ -82,24 +40,34 @@ function Exercise() {
         console.log(result);
         setExercise(result.data)
     }
-    console.log(exercise);
 
+    async function getEquipments() {
+        let result = await fetch("http://younikweb.ir/api/v1/equipments", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setEquipments(result.data)
+    }
+    async function getMuscles() {
+        let result = await fetch("http://younikweb.ir/api/v1/muscles", {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "appliction/json",
+                "Accept": "application/json"
+            },
+            // body: JSON.stringify(item)
+        });
+        result = await result.json()
+        setMuscles(result.data)
+    }
 
-    const {
-        getRootProps,
-        getInputProps,
-        isDragActive,
-        isDragAccept,
-        isDragReject
-    } = useDropzone({
-        accept: {
-            'image/jpeg': ['.jpeg', '.png']
-        }
-    });
-    const [text, setText] = React.useState('');
-    const handlChange = (event) => {
-        setText(event.target.value);
-    };
 
     const [openList, setOpenList] = React.useState(false);
     const handleOpenList = () => setOpenList(true);
@@ -108,8 +76,8 @@ function Exercise() {
 
     // create exercise 
     const [openCreateList, setOpenCreateList] = useState(false)
-    const handleOpenCreate = useState(true)
-    const handleCloseCreate = useState(false)
+    const handleOpenCreate = () => setOpenCreateList(true)
+    const handleCloseCreate = () => setOpenCreateList(false)
 
     const style = {
         position: 'absolute',
@@ -124,12 +92,9 @@ function Exercise() {
     };
 
 
-
-
     const listShow = useSelector(state => state.exerciseShow.list)
 
 
-    console.log(listShow);
     const dispatch = useDispatch()
     const handleList = (option) => {
         const listexercise = exercise.find((item) => item.id == option)
@@ -137,37 +102,51 @@ function Exercise() {
         console.log(listexercise);
     }
 
+    // serarch and filter
 
-    //  serach and filter
-    const [filterEquipment, setFilterEquipment] = useState(0)
-    const handlefilter = (e) => {
+    const [filterEquipment, setFilterEquipment] = useState('')
+    const [filterMuscles, setFilterMuscles] = useState('')
+    const [search, setSearch] = useState('')
+
+
+    const handleFilterEquipment = (e) => {
         setFilterEquipment(e.target.value)
-        setFilterMuscles(0)
+        setSearch('')
     }
+
+    const handleFilterMuscles = (e) => {
+        setFilterMuscles(e.target.value)
+        setSearch('')
+    }
+
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
+    }
+
+
     const Filtered = filterEquipment == 0 ?
         exercise :
         exercise.filter((option) =>
             option.equipment_id == filterEquipment
             // option.equipment.title.toLowerCase().includes(filterEquipment.toLowerCase())
         );
-    const [filterMuscles, setFilterMuscles] = useState(0)
-    const handleFilter = (e) => {
-        setFilterMuscles(e.target.value)
-        setFilterEquipment(0)
-    }
+
+
     const filtered = filterMuscles == 0 ?
         Filtered :
-        exercise.filter((option) =>
+        Filtered.filter((option) =>
             option.primary_muscle_id == filterMuscles
         );
-    const [search, setSearch] = useState("")
-    const handleSearch = (e) => {
-        setSearch(e.target.value)
-    }
+
+
     const searched = !search ?
         filtered :
         exercise.filter((option) =>
-            option.title.toLowerCase().includes(search.toLowerCase()));
+            option.fa_title.toLowerCase().includes(search.toLowerCase()) ||
+            option.en_title.toLowerCase().includes(search.toLowerCase()))
+
+
+
 
 
     return (
@@ -179,225 +158,45 @@ function Exercise() {
                 <div className='exercise-box lg:flex sm:w-full '>
                     <div className='exercise-left hidden max-md:w-full mb-5 lg:w-2/6 sm:inline'>
                         <Box component="form" sx={{ '& .MuiTextField-root': { margin: '4px 0', width: '100%' }, }} noValidate autoComplete="off">
-                            <h1>Filters</h1>
-                            <div>
-                                <TextField
-                                    id="outlined-select"
-                                    select
-                                    value={filterEquipment}
-                                    onChange={handlefilter}
+                        <MenuExercise />
 
-                                >
-                                    {equipment.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                            <div>
-                                <TextField
-                                    id="outlined-select-currency"
-                                    select
-                                    value={filterMuscles}
-                                    onChange={handleFilter}
-                                >
-                                    {muscles.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
+                        </Box >
 
-                        </Box>
-                        <div>
-                            <div>
-                                <a onClick={handleOpenCreate}>+ create exercise</a>
-                                <Modal
-                                    open={openCreateList}
-                                    onClose={handleCloseCreate}
-                                >
-                                    <AddExercise />
-                                </Modal>
-                            </div>
 
-                            <div>
-                                <Paper
-                                    component="form"
-                                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', backgroundColor: 'rgb(240, 240, 240);' }}
-                                >
-                                    <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
-                                        <SearchIcon />
-                                    </IconButton>
-                                    <InputBase
-                                        sx={{ ml: 1, flex: 1 }}
-                                        placeholder="Search Exercise"
-                                        inputProps={{ 'aria-label': 'search exercise' }}
-                                        onChange={handleSearch}
-                                        value={search}
-                                    />
 
-                                </Paper>
-                            </div>
-                            <div>
-
-                                {exercise?.map((option) =>
-                                    <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper',
-                                     maxHeight: 300, position: 'relative', overflow: 'auto', }}>
-                                        <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
-                                            <ListItemAvatar>
-                                                <Avatar alt="Remy Sharp" src={'option.avatar'} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={option.fa_title}
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            sx={{ display: 'inline' }}
-                                                            component="span"
-                                                            variant="body2"
-                                                            color="text.primary"
-                                                        >
-                                                        </Typography>
-                                                        {option.primary_muscle.title}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        <hr className='border-t-2'></hr>
-                                    </List>)}
-                            </div>
-                        </div>
                     </div>
 
-                    <div className="max-md:w-full mb-5 lg:w-4/6 md:mr-4 lg:px-5 px-0">
+                    <div className="exercise-right max-md:w-full mb-5 md:w-4/6 md:ml-14 mt-8 md:mr-7">
 
                         <Paper elevation={2}  >
-
-                            {listShow.length > 0 ? <CardExercise /> :
-
-                                <div className='fitnessIcon mt-20 p-20'>
-                                    <FitnessCenterIcon color="primary" sx={{ fontSize: 100 }} />
-                                    <h2>Select an exercise</h2>
-                                </div>
-
-                            }
-
-
+                            <div className=" md:cardMD">
+                                {listShow.length > 0 ? <CardExercise /> :
+                                    <div className='emptyRight '>
+                                        <FitnessCenterIcon color="primary" className="fitnessIcon" sx={{ fontSize: 80 }} />
+                                        <Typography> لطفا یک ورزش انتخاب کنید</Typography>
+                                    </div>
+                                }
+                            </div>
                             <Hidden smUp>
-                                <Button onClick={handleOpenList} className="float-end  md:h-10  " color="primary" variant="contained" >
-                                    Add Exercise
-                                </Button>
-                            </Hidden>
-
-
+                                <Button onClick={handleOpenList} className="float-end h-10 button mr-7  "
+                                    color="primary" variant="contained" ><Typography> اضافه کردن ورزش</Typography> </Button>  </Hidden>
                             <Modal
                                 open={openList}
                                 onClose={handleCloseList}
                                 aria-labelledby="modal-modal-title"
                                 aria-describedby="modal-modal-description"
                             >
-                                <Box sx={style}>
-                                    <Box component="form" container sx={{ '& .MuiTextField-root': { marginTop: '.5rem ', width: '100%' }, }} noValidate autoComplete="off">
-                                        <h3>Filters</h3>
-                                        <div>
-                                            <TextField
-                                                id="outlined-select"
-                                                select
-                                                value={filterEquipment}
-                                                onChange={handlefilter}
-                                            >
-                                                {equipment.map((option) => (
-                                                    <MenuItem key={option.value} value={option.value}>
-                                                        {option.label}
-                                                    </MenuItem>
-                                                ))}
-                                            </TextField>
-                                        </div>
-                                        <div>
-                                            <TextField
-
-                                                id="outlined-select-currency"
-                                                select
-                                                value={filterMuscles}
-                                                onChange={handleFilter}
-                                            >
-                                                {muscles.map((option) => (
-                                                    <MenuItem key={option.value} value={option.value}>
-                                                        {option.label}
-                                                    </MenuItem>
-                                                ))}
-                                            </TextField>
-                                        </div>
-                                    </Box>
-                                    <div>
-                                        <div >
-                                            <div>
-                                                <a onClick={handleOpenCreate}>+ create exercise</a>
-                                                <Modal
-                                                    open={openCreateList}
-                                                    onClose={handleCloseCreate}
-                                                >
-                                                    <AddExercise />
-                                                </Modal>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <Paper
-                                                component="form"
-                                                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', backgroundColor: 'rgb(240, 240, 240);' }}
-                                            >
-                                                <IconButton type="submit" sx={{ p: '5px' }} aria-label="search">
-                                                    <SearchIcon />
-                                                </IconButton>
-                                                <InputBase
-                                                    sx={{ ml: 1, flex: 1 }}
-                                                    placeholder="Search Exercise"
-                                                    inputProps={{ 'aria-label': 'search exercise' }}
-                                                    onChange={handleSearch}
-                                                    value={search}
-                                                />
-                                            </Paper>
-                                        </div>
-                                        <div>
-                                            // list exercise for pc
-                                            {exercise?.map((option) =>
-                                                <List key={option.id} sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 300, position: 'relative', overflow: 'auto', }}>
-                                                    <ListItem alignItems="flex-start" onClick={() => handleList(option.id)}>
-                                                        <ListItemAvatar>
-                                                            <Avatar alt="Remy Sharp" src={"option.avatar"} />
-                                                        </ListItemAvatar>
-                                                        <ListItemText
-                                                            primary={option.fa_title}
-                                                            secondary={
-                                                                <React.Fragment>
-                                                                    <Typography
-                                                                        sx={{ display: 'inline' }}
-                                                                        component="span"
-                                                                        variant="body2"
-                                                                        color="text.primary"
-                                                                    >
-                                                                    </Typography>
-                                                                    {option.primary_muscle.title}
-                                                                </React.Fragment>
-                                                            }
-                                                        />
-                                                    </ListItem>
-                                                    <hr className='border-t-2'></hr>
-                                                </List>)}
-                                        </div>
-                                    </div>
+                                <Box sx={style} className='exercise-left'>
+                                <MenuExercise />
 
                                 </Box>
                             </Modal>
+                            {/* +<Box component="button" sx={{ display: { xl: 'none', xs: 'block' } }} /> */}
                         </Paper>
-
-
-
                     </div>
                 </div>
-            </div>
+            </div >
+            <LabelBottomNavigation />
         </div >
     );
 }

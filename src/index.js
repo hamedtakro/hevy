@@ -1,4 +1,4 @@
-import React ,{Suspense} from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
@@ -19,6 +19,9 @@ import CardSelect from "./component/routines/cardSelect";
 import RoutinesDay from "./component/routines/routinesDay";
 import EditeRoutines from "./component/routines/updateRoutines/editeRoutines"
 import PrivateRoutes from "./component/authentication/privetRoutes";
+import LabelBottomNavigation from './component/layout/buttomNavigation'
+
+import Footer from "./component/layout/footer";
 // 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,23 +29,26 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
           <Route path="login" element={<Login />} />
           <Route path="logout" element={<Logout />} />
-          <Route path="*" element={<p>There's nothing here: 404!</p>} />
-          <Route path="check" element={<Check />} />
-          <Route path="settings" element={<Settings />} />
+          {/* <Route element={<PrivateRoutes />}> */}
 
-          <Route element={<PrivateRoutes />}>
-            <Route path="routines" element={<Suspense fallback={<h3>loading ....</h3>}><Routines /></Suspense> } />
+            <Route path="/" element={<App />} />
+            <Route path="*" element={<p>There's nothing here: 404!</p>} />
+            <Route path="check" element={<Check />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="routines" element={<Suspense fallback={<h3>loading ....</h3>}><Routines /></Suspense>} />
             <Route path="exercise" element={<Exercise />} />
             <Route path="newroutin" element={<Newroutin />} />
             <Route path="routinesDay/:id" element={<RoutinesDay />} />
             <Route path="editeRoutin/:id" element={<EditeRoutines />} />
-          </Route>
-          
+            
+          {/* </Route> */}
+
         </Routes>
       </BrowserRouter>
+      <LabelBottomNavigation />
+      <Footer />
     </Provider>
   </React.StrictMode>
 );
